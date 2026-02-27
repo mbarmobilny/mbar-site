@@ -12,12 +12,12 @@ export function About() {
   const { language } = useLanguage();
   const stats = [
     { label: getTranslation(language, "statYears"), value: "5+", prefix: null },
-    { label: getTranslation(language, "statHours"), value: "10k", prefix: "<" },
+    { label: getTranslation(language, "statHours"), value: "10k", prefix: ">" },
     { label: getTranslation(language, "statIce"), value: "2k+", prefix: null },
     {
       label: getTranslation(language, "statCocktails"),
       value: "5k",
-      prefix: "<",
+      prefix: ">",
     },
   ];
 

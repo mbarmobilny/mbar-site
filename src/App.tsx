@@ -6,6 +6,7 @@ import { Hero } from "./components/Hero";
 import { Services } from "./components/Services";
 import { CallToAction } from "./components/CallToAction";
 import { Footer } from "./components/Footer";
+import { IceCubeSpinner } from "./components/IceCubeSpinner";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 const Gallery = lazy(() =>
@@ -77,16 +78,7 @@ export default function App() {
           transition={pageTransition}
           className="flex-grow"
         >
-          <Suspense
-            fallback={
-              <div
-                className="min-h-[50vh] flex items-center justify-center"
-                aria-hidden="true"
-              />
-            }
-          >
-            {renderPage()}
-          </Suspense>
+          <Suspense fallback={<IceCubeSpinner />}>{renderPage()}</Suspense>
         </motion.div>
       </AnimatePresence>
 

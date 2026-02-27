@@ -22,6 +22,10 @@ VITE_FACEBOOK_URL=https://www.facebook.com/share/17HJkD8LRt/
 # 2. Нова форма → Email: mbarmobilny@gmail.com
 # 3. Скопіюйте ID з URL (https://formspree.io/f/XXXXX → XXXXX)
 VITE_FORMSPREE_ID=your_form_id
+
+# Google Analytics 4 (опційно)
+# analytics.google.com → Admin → Data streams → Measurement ID
+VITE_GA_ID=G-XXXXXXXXXX
 ```
 
 ## Деплой

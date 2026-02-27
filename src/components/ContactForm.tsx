@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { Calendar, Mail, MapPin, Phone } from "lucide-react";
+import {
+  Calendar,
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  Phone,
+} from "lucide-react";
 import { getTranslation } from "../utils/translations";
 import { DatePicker } from "./ui/DatePicker";
 import { SwissButton } from "./ui/SwissButton";
@@ -26,6 +33,11 @@ const EMPTY_FORM = {
 const PHONE = import.meta.env.VITE_PHONE || "+48578224721";
 const EMAIL = import.meta.env.VITE_EMAIL || "mbarmobilny@gmail.com";
 const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID;
+const INSTAGRAM_URL =
+  import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/mbarmobilny";
+const FACEBOOK_URL =
+  import.meta.env.VITE_FACEBOOK_URL ||
+  "https://www.facebook.com/share/17HJkD8LRt/";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -69,6 +81,14 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
       );
       return;
     }
+    const selectedDay = new Date(date);
+    selectedDay.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDay.getTime() < today.getTime()) {
+      toast.error(t("datePastError"));
+      return;
+    }
     if (!isValidEmail(formData.email)) {
       toast.error(
         language === "pl"
@@ -100,16 +120,16 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
 
         if (!res.ok) throw new Error("Form submission failed");
       } else {
-        const subject = encodeURIComponent(
-          `[mBar] Zapytanie od ${formData.name}`,
-        );
-        const body = encodeURIComponent(
-          `Imię: ${formData.name}\nEmail: ${formData.email}\nTelefon: ${formData.phone}\n` +
-            `Typ wydarzenia: ${formData.eventType}\nLiczba gości: ${formData.guestCount}\n` +
-            `Lokalizacja: ${formData.location}\nPakiet: ${formData.packageChoice}\n` +
-            `Data: ${date?.toISOString().split("T")[0]}\n\nWiadomość:\n${formData.message}`,
-        );
-        window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+        const subject =
+          language === "pl"
+            ? `[mBar] Zapytanie od ${formData.name}`
+            : `[mBar] Inquiry from ${formData.name}`;
+        const body =
+          `${t("name")}: ${formData.name}\n${t("email")}: ${formData.email}\n${t("phone")}: ${formData.phone}\n` +
+          `${t("eventType")}: ${formData.eventType}\n${t("guestCount")}: ${formData.guestCount}\n` +
+          `${t("location")}: ${formData.location}\n${t("packageField")}: ${formData.packageChoice}\n` +
+          `${t("eventDate")}: ${date?.toISOString().split("T")[0]}\n\n${t("message")}:\n${formData.message}`;
+        window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       }
 
       toast.success(
@@ -153,17 +173,23 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
     "block text-xs uppercase tracking-widest text-primary/60 mb-2 font-medium";
 
   const contactItems = [
-    { icon: Phone, label: t("phone"), value: PHONE },
-    { icon: Mail, label: "Email", value: EMAIL },
+    {
+      icon: Phone,
+      label: t("phone"),
+      value: PHONE,
+      href: `tel:${PHONE.replace(/\s/g, "")}`,
+    },
+    { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
     { icon: MapPin, label: t("area"), value: t("serviceArea") },
     { icon: Calendar, label: t("response"), value: t("responseTime") },
   ];
 
   const whyUsItems = [
-    t("certified"),
     t("premiumEquipment"),
     t("customMenuShort"),
-    t("insurance"),
+    t("quality"),
+    t("professionalism"),
+    t("creativity"),
   ];
 
   return (
@@ -183,7 +209,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                 {t("contactDetails")}
               </h3>
               <div className="space-y-8">
-                {contactItems.map(({ icon: Icon, label, value }) => (
+                {contactItems.map(({ icon: Icon, label, value, href }) => (
                   <div
                     key={label}
                     className="group flex items-start gap-6 hover:translate-x-2 transition-transform duration-300"
@@ -193,10 +219,48 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                       <span className="block text-xs uppercase tracking-widest text-primary/40 mb-1">
                         {label}
                       </span>
-                      <p className="text-xl text-primary font-light">{value}</p>
+                      {href ? (
+                        <a
+                          href={href}
+                          className="text-xl text-primary font-light hover:text-secondary transition-colors"
+                        >
+                          {value}
+                        </a>
+                      ) : (
+                        <p className="text-xl text-primary font-light">
+                          {value}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}
+                <div className="pt-6 border-t border-primary/10">
+                  <span className="block text-xs uppercase tracking-widest text-primary/40 mb-3">
+                    {t("findUsOn")}
+                  </span>
+                  <div className="flex gap-4">
+                    <a
+                      href={INSTAGRAM_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-primary hover:text-secondary transition-colors"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="h-6 w-6" />
+                      <span className="text-lg font-light">Instagram</span>
+                    </a>
+                    <a
+                      href={FACEBOOK_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-primary hover:text-secondary transition-colors"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="h-6 w-6" />
+                      <span className="text-lg font-light">Facebook</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -222,20 +286,20 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className="space-y-2">
                   <label htmlFor="name" className={labelCls}>
-                    {t("name")}
+                    {t("name")} *
                   </label>
                   <input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleChange("name", e.target.value)}
-                    placeholder="John Smith"
+                    placeholder={t("namePlaceholder")}
                     required
                     className={inputCls}
                   />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className={labelCls}>
-                    {t("email")}
+                    {t("email")} *
                   </label>
                   <input
                     id="email"
@@ -243,7 +307,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     value={formData.email}
                     onChange={(e) => handleChange("email", e.target.value)}
                     onBlur={handleEmailBlur}
-                    placeholder="john@example.com"
+                    placeholder={t("emailPlaceholder")}
                     required
                     className={`${inputCls} ${emailError ? "!border-destructive" : ""}`}
                     aria-invalid={!!emailError}
@@ -264,21 +328,21 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className="space-y-2">
                   <label htmlFor="phone" className={labelCls}>
-                    {t("phone")}
+                    {t("phone")} *
                   </label>
                   <input
                     id="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
-                    placeholder="+48 123 456 789"
+                    placeholder={t("phonePlaceholder")}
                     required
                     className={inputCls}
                   />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="eventDate" className={labelCls}>
-                    {t("eventDate")}
+                    {t("eventDate")} *
                   </label>
                   <DatePicker
                     date={date}
@@ -287,6 +351,22 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     placeholder={
                       language === "pl" ? "DD.MM.RRRR" : "DD.MM.YYYY"
                     }
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="space-y-2">
+                  <label htmlFor="location" className={labelCls}>
+                    {t("location")} *
+                  </label>
+                  <input
+                    id="location"
+                    value={formData.location}
+                    onChange={(e) => handleChange("location", e.target.value)}
+                    placeholder={t("locationPlaceholder")}
+                    required
+                    className={inputCls}
                   />
                 </div>
               </div>
@@ -361,19 +441,6 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                       </span>
                     )}
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="location" className={labelCls}>
-                    {t("location")}
-                  </label>
-                  <input
-                    id="location"
-                    value={formData.location}
-                    onChange={(e) => handleChange("location", e.target.value)}
-                    placeholder={t("locationPlaceholder")}
-                    required
-                    className={inputCls}
-                  />
                 </div>
               </div>
 

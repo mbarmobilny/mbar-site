@@ -20,6 +20,7 @@
    - `VITE_EMAIL` = email
    - `VITE_INSTAGRAM_URL` = посилання на Instagram
    - `VITE_FACEBOOK_URL` = посилання на Facebook
+   - `VITE_GA_ID` = (опційно) Google Analytics 4 ID, формат `G-XXXXXXXXXX`
 6. **Trigger deploy** після додавання змінних (Deploys → Trigger deploy)
 
 ## 3. Домен
@@ -42,3 +43,16 @@
 - [ ] HTTPS працює (замок у браузері)
 - [ ] `https://mbar.events/robots.txt` відкривається
 - [ ] `https://mbar.events/sitemap.xml` відкривається
+
+---
+
+## 6. Google Analytics (опційно)
+
+1. Зайди на [analytics.google.com](https://analytics.google.com)
+2. **Admin** → **Create property** → введи назву (наприклад "mBar")
+3. **Data streams** → **Add stream** → **Web** → URL `https://mbar.events`
+4. Скопіюй **Measurement ID** (формат `G-XXXXXXXXXX`)
+5. Додай у Netlify: `VITE_GA_ID` = `G-XXXXXXXXXX`
+6. Зроби новий деплой
+
+Після цього в GA4 з’являтимуться відвідування, джерела трафіку, пристрої тощо.

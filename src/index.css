@@ -3509,23 +3509,27 @@
 html {
   font-size: var(--font-size);
   scroll-behavior: smooth;
+  /* Standard scrollbar (Firefox, newer browsers) */
+  scrollbar-color: var(--secondary) var(--primary);
+  scrollbar-width: thin;
 }
 
-::-webkit-scrollbar {
+/* WebKit scrollbar (Chrome, Safari, Edge) */
+html::-webkit-scrollbar {
   width: 10px;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--background);
+html::-webkit-scrollbar-track {
+  background: var(--primary);
 }
 
-::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb {
   background: var(--secondary);
   border-radius: 5px;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
 }
 
-::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
 }
 
@@ -3939,5 +3943,80 @@ select:focus-visible {
         var(--tw-exit-scale, 1)
       )
       rotate(var(--tw-exit-rotate, 0));
+  }
+}
+
+/* SimpleLightbox - dark overlay, light controls */
+.sl-overlay {
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+.sl-wrapper .sl-close,
+.sl-wrapper .sl-navigation button.sl-prev,
+.sl-wrapper .sl-navigation button.sl-next {
+  color: #fff !important;
+}
+
+.sl-wrapper .sl-counter {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Ice cube loading spinner */
+.ice-cube-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.ice-cube-spinner__cube {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: ice-cube-spin 1.2s ease-in-out infinite;
+}
+
+.ice-cube-spinner__face {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(232, 245, 253, 0.95) 0%,
+    rgba(200, 228, 242, 0.9) 50%,
+    rgba(168, 208, 232, 0.85) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.5);
+  backface-visibility: visible;
+}
+
+.ice-cube-spinner__face--front {
+  transform: translateZ(20px);
+}
+.ice-cube-spinner__face--back {
+  transform: rotateY(180deg) translateZ(20px);
+}
+.ice-cube-spinner__face--right {
+  transform: rotateY(90deg) translateZ(20px);
+}
+.ice-cube-spinner__face--left {
+  transform: rotateY(-90deg) translateZ(20px);
+}
+.ice-cube-spinner__face--top {
+  transform: rotateX(90deg) translateZ(20px);
+}
+.ice-cube-spinner__face--bottom {
+  transform: rotateX(-90deg) translateZ(20px);
+}
+
+@keyframes ice-cube-spin {
+  0%,
+  100% {
+    transform: rotateX(-25deg) rotateY(0deg);
+  }
+  50% {
+    transform: rotateX(-25deg) rotateY(180deg);
   }
 }

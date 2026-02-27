@@ -17,7 +17,7 @@ export const translations = {
     heroSubtitle: "Premium Mobilny Bar",
     heroTagline: "Z myślą o każdym detalu.",
     heroDescription:
-      "Podnieś swoje specjalne wydarzenia na wyższy poziom dzięki craftowym koktajlom, profesjonalnym barmenom i niezapomnianym doświadczeniom",
+      "Podnieś swoje specjalne wydarzenia na wyższy poziom dzięki kraftowym koktajlom, profesjonalnym barmanom i niezapomnianym doświadczeniom",
     getQuote: "Zarezerwuj swoją datę",
     viewWork: "Zobacz nasze prace",
     rating: "4.9/5 Ocena",
@@ -78,8 +78,8 @@ export const translations = {
     photoCaption: "mBar",
     statYears: "Lat doświadczenia",
     statHours: "Godzin za barem",
-    statIce: "Kostek lodu",
-    statCocktails: "Koktajli",
+    statIce: "Wyrzeźbionych kostek lodu",
+    statCocktails: "Zaserwowanych koktajli",
     craftTagline: "Rzemiosło · Precyzja · Estetyka",
     iceBlockTitle: "Lód jako znak\nrozpoznawczy",
     iceBlockDesc:
@@ -123,7 +123,7 @@ export const translations = {
     additionalServicesDesc:
       "Wzbogać swoje doświadczenie o te opcjonalne dodatki. Każdy szczegół ma znaczenie.",
     additionalHour: "Dodatkowa godzina",
-    additionalHourPrice: "400 zł/god",
+    additionalHourPrice: "400 zł/h",
     additionalCocktail: "Dodatkowy koktajl do menu",
     additionalCocktailPrice: "200 zł",
     additionalDrinks: "50 dodatkowych napojów bezalkoholowych",
@@ -184,15 +184,21 @@ export const translations = {
     guestCount: "Liczba gości",
     message: "Wiadomość",
     sendMessage: "Wyślij wiadomość",
+    namePlaceholder: "np. Jan Kowalski",
+    emailPlaceholder: "jan@example.com",
+    phonePlaceholder: "+48 123 456 789",
+    requiredLabel: "wymagane",
+    datePastError: "Data wydarzenia nie może być w przeszłości.",
 
     // Testimonials
     testimonialsTitle: "Co mówią nasi klienci",
     testimonialsSubtitle: "Przeczytaj opinie zadowolonych klientów",
 
-    // Footer
+    // Footer & Contact
     quickLinks: "Szybkie linki",
     contactInfo: "Informacje kontaktowe",
     followUs: "Śledź nas",
+    findUsOn: "Znajdź nas na",
     allRightsReserved: "Wszystkie prawa zastrzeżone.",
 
     // Process
@@ -275,8 +281,8 @@ export const translations = {
     photoCaption: "mBar",
     statYears: "Years Experience",
     statHours: "Hours Behind the Bar",
-    statIce: "Hand-Cut Ice Cubes",
-    statCocktails: "Cocktails Served",
+    statIce: "Hand-carved ice cubes",
+    statCocktails: "Cocktails served",
     craftTagline: "Craft · Precision · Aesthetics",
     iceBlockTitle: "Ice as a\nsignature element",
     iceBlockDesc:
@@ -319,7 +325,7 @@ export const translations = {
     additionalServicesDesc:
       "Enhance your experience with these optional add-ons. Every detail matters.",
     additionalHour: "Additional hour",
-    additionalHourPrice: "400 zł/hour",
+    additionalHourPrice: "400 zł/h",
     additionalCocktail: "Additional cocktail to the menu",
     additionalCocktailPrice: "200 zł",
     additionalDrinks: "50 additional non-alcoholic drinks",
@@ -380,15 +386,21 @@ export const translations = {
     guestCount: "Guest Count",
     message: "Message",
     sendMessage: "Send Message",
+    namePlaceholder: "e.g. John Smith",
+    emailPlaceholder: "john@example.com",
+    phonePlaceholder: "+1 234 567 890",
+    requiredLabel: "required",
+    datePastError: "Event date cannot be in the past.",
 
     // Testimonials
     testimonialsTitle: "What Our Clients Say",
     testimonialsSubtitle: "Read reviews from satisfied customers",
 
-    // Footer
+    // Footer & Contact
     quickLinks: "Quick Links",
     contactInfo: "Contact Info",
     followUs: "Follow Us",
+    findUsOn: "Find us on",
     allRightsReserved: "All rights reserved.",
 
     // Process

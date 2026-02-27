@@ -16,6 +16,12 @@ interface DatePickerProps {
   className?: string;
 }
 
+function startOfToday() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
 export function DatePicker({
   date,
   setDate,
@@ -58,18 +64,24 @@ export function DatePicker({
             setDate(newDate);
             setOpen(false);
           }}
+          disabled={{ before: startOfToday() }}
           initialFocus
           locale={language === "pl" ? pl : enUS}
           className="p-3 bg-primary text-secondary"
           classNames={{
             day_selected:
-              "bg-secondary text-primary hover:bg-secondary hover:text-primary focus:bg-secondary focus:text-primary rounded-none opacity-100 font-medium",
+              "!bg-secondary !text-primary hover:!bg-secondary hover:!text-primary focus:!bg-secondary focus:!text-primary rounded-none opacity-100 font-medium",
             day_today:
               "bg-secondary/25 text-secondary rounded-none font-bold opacity-100 border border-secondary/50",
-            day: "h-9 w-9 p-0 font-normal rounded-none transition-all duration-300 text-secondary/30 hover:text-secondary hover:bg-secondary/10 aria-selected:opacity-100",
+            day: "h-9 w-9 p-0 font-normal rounded-none transition-all duration-300 text-secondary hover:text-secondary hover:bg-secondary/10 aria-selected:opacity-100",
+            day_outside:
+              "text-secondary/50 aria-selected:!bg-secondary aria-selected:!text-primary",
+            day_disabled:
+              "text-secondary/40 opacity-60 cursor-not-allowed pointer-events-none",
+            head_row: "flex w-full gap-1",
             head_cell:
-              "text-secondary rounded-none w-9 font-medium text-[0.8rem] uppercase tracking-widest opacity-100",
-            cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-secondary/10 first:[&:has([aria-selected])]:rounded-l-none last:[&:has([aria-selected])]:rounded-r-none focus-within:relative focus-within:z-20",
+              "text-secondary rounded-none w-9 min-w-[2.25rem] font-medium text-[0.8rem] uppercase tracking-widest opacity-100 px-1",
+            cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-transparent first:[&:has([aria-selected])]:rounded-l-none last:[&:has([aria-selected])]:rounded-r-none focus-within:relative focus-within:z-20",
             nav_button:
               "border border-secondary/20 hover:bg-secondary/10 text-secondary rounded-none opacity-100 transition-colors",
             caption:
