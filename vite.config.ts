@@ -6,6 +6,9 @@ const srcDir = path.resolve(__dirname, 'src')
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    global: 'window',
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {

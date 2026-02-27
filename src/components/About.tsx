@@ -119,7 +119,7 @@ export function About() {
                 style={{ maxHeight: "620px" }}
               />
               <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary/40 to-transparent" />
-              <p className="absolute bottom-5 left-6 text-[10px] uppercase tracking-[0.2em] text-white/60">
+              <p className="absolute bottom-5 left-6 text-[10px] tracking-[0.2em] text-white/60 font-sans normal-case">
                 {getTranslation(language, "photoCaption")}
               </p>
             </div>

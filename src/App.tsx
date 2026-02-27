@@ -69,7 +69,7 @@ export default function App() {
           transition={pageTransition}
           className="flex-grow"
         >
-          <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center" />}>
+          <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center" aria-hidden="true" />}>
             {renderPage()}
           </Suspense>
         </motion.div>

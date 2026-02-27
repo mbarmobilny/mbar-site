@@ -1,183 +1,104 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { motion } from "motion/react";
-import { useState } from "react";
-import FsLightbox from "fslightbox-react";
+import { useState, useEffect, useRef } from "react";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
 import { Container } from "./Container";
 import { SectionHeader } from "./SectionHeader";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-import imgDSC0238 from "../assets/DSC_0238.jpg";
-import imgDSC0404 from "../assets/DSC_0404.jpg";
-import imgDSC0413 from "../assets/DSC_0413.jpg";
-import imgGintonic from "../assets/gintonic.jpg";
-import imgGringo from "../assets/gringo.jpg";
-import imgPornStar from "../assets/porn-star-martini.jpg";
-import imgVermouth from "../assets/vermouth-cocktail.jpg";
-import imgWs from "../assets/ws.jpg";
-import imgYan0127 from "../assets/yan-gotowe-DSC_0127.jpg";
-import imgYan0292 from "../assets/yan-gotowe-DSC_0292.jpg";
-import imgYan0420 from "../assets/yan-gotowe-DSC_0420.jpg";
-import imgYan0451 from "../assets/yan-gotowe-DSC_0451.jpg";
-import imgYan0530 from "../assets/yan-gotowe-DSC_0530.jpg";
-import imgYennefer from "../assets/yennefer.jpg";
-import imgBarSetup1 from "../assets/gallery-bar-setup-1.jpg";
-import imgBarSetup2 from "../assets/gallery-bar-setup-2.jpg";
-import imgBarSetup3 from "../assets/gallery-bar-setup-3.jpg";
-import imgBarSetup4 from "../assets/gallery-bar-setup-4.jpg";
-import imgBarSetup5 from "../assets/gallery-bar-setup-5.jpg";
-import imgBarSetup6 from "../assets/gallery-bar-setup-6.jpg";
-import imgBarSetup7 from "../assets/gallery-bar-setup-7.jpg";
+// Cocktails
+import imgCocktailsAviation from "../assets/gallery-cocktails-aviation.jpg";
+import imgCocktailsAperol from "../assets/gallery-cocktails-aperol.jpg";
+import imgCocktailsCloverclub from "../assets/gallery-cocktails-cloverclub.jpg";
+import imgCocktailsGintonic from "../assets/gallery-cocktails-gintonic.jpg";
+import imgCocktailsGringo from "../assets/gallery-cocktails-gringo.jpg";
+import imgCocktailsNegroni from "../assets/gallery-cocktails-negroni.jpg";
+import imgCocktailsPornStar from "../assets/gallery-cocktails-porn-star-martini.jpg";
+import imgCocktailsSiesta from "../assets/gallery-cocktails-siesta.jpg";
+import imgCocktailsVermouth from "../assets/gallery-cocktails-vermouth-cocktail.jpg";
+import imgCocktailsWs from "../assets/gallery-cocktails-ws.jpg";
+import imgCocktailsYennefer from "../assets/gallery-cocktails-yennefer.jpg";
+
+// Bar setup
+import imgBar1 from "../assets/gallery-bar-setup-1.jpg";
+import imgBar2 from "../assets/gallery-bar-setup-2.jpg";
+import imgBar3 from "../assets/gallery-bar-setup-3.jpg";
+import imgBar4 from "../assets/gallery-bar-setup-4.jpg";
+import imgBar5 from "../assets/gallery-bar-setup-5.jpg";
+import imgBar6 from "../assets/gallery-bar-setup-6.jpg";
+
+// Events
+import imgEventsGringo from "../assets/gallery-events-gringo.jpg";
+import imgEventsNegroni from "../assets/gallery-events-negroni.jpg";
+import imgEventsPornstar from "../assets/gallery-events-pornstar.jpg";
+import imgEventsWhiskeysour from "../assets/gallery-events-whiskeysour.jpg";
 
 const galleryImages = [
-  {
-    src: imgDSC0238,
-    alt: "Cocktail",
-    title: "Cocktails 1",
-    category: "cocktails",
-  },
-  {
-    src: imgDSC0404,
-    alt: "Cocktail",
-    title: "Cocktails 2",
-    category: "cocktails",
-  },
-  {
-    src: imgDSC0413,
-    alt: "Cocktail",
-    title: "Cocktails 3",
-    category: "cocktails",
-  },
-  {
-    src: imgGintonic,
-    alt: "Gin Tonic",
-    title: "Cocktails 4",
-    category: "cocktails",
-  },
-  {
-    src: imgGringo,
-    alt: "Gringo",
-    title: "Cocktails 5",
-    category: "cocktails",
-  },
-  {
-    src: imgPornStar,
-    alt: "Porn Star Martini",
-    title: "Cocktails 6",
-    category: "cocktails",
-  },
-  {
-    src: imgVermouth,
-    alt: "Vermouth cocktail",
-    title: "Cocktails 7",
-    category: "cocktails",
-  },
-  { src: imgWs, alt: "Cocktail", title: "Cocktails 8", category: "cocktails" },
-  {
-    src: imgYan0127,
-    alt: "Cocktail",
-    title: "Cocktails 9",
-    category: "cocktails",
-  },
-  {
-    src: imgYan0292,
-    alt: "Cocktail",
-    title: "Cocktails 10",
-    category: "cocktails",
-  },
-  {
-    src: imgYan0420,
-    alt: "Cocktail",
-    title: "Cocktails 11",
-    category: "cocktails",
-  },
-  {
-    src: imgYan0451,
-    alt: "Cocktail",
-    title: "Cocktails 12",
-    category: "cocktails",
-  },
-  {
-    src: imgYan0530,
-    alt: "Cocktail",
-    title: "Cocktails 13",
-    category: "cocktails",
-  },
-  {
-    src: imgYennefer,
-    alt: "Yennefer cocktail",
-    title: "Cocktails 14",
-    category: "cocktails",
-  },
-  {
-    src: imgBarSetup1,
-    alt: "Bar setup",
-    title: "Bar Setup 1",
-    category: "setup",
-  },
-  {
-    src: imgBarSetup2,
-    alt: "Bar setup",
-    title: "Bar Setup 2",
-    category: "setup",
-  },
-  {
-    src: imgBarSetup3,
-    alt: "Bar setup",
-    title: "Bar Setup 3",
-    category: "setup",
-  },
-  {
-    src: imgBarSetup4,
-    alt: "Bar setup",
-    title: "Bar Setup 4",
-    category: "setup",
-  },
-  {
-    src: imgBarSetup5,
-    alt: "Bar setup",
-    title: "Bar Setup 5",
-    category: "setup",
-  },
-  {
-    src: imgBarSetup6,
-    alt: "Bar setup",
-    title: "Bar Setup 6",
-    category: "setup",
-  },
-  {
-    src: imgBarSetup7,
-    alt: "Bar setup",
-    title: "Bar Setup 7",
-    category: "setup",
-  },
+  // Cocktails
+  { src: imgCocktailsAviation, alt: "Aviation", title: "Aviation", category: "cocktails" },
+  { src: imgCocktailsSiesta, alt: "Siesta", title: "Siesta", category: "cocktails" },
+  { src: imgCocktailsYennefer, alt: "Yennefer cocktail", title: "Yennefer", category: "cocktails" },
+  { src: imgCocktailsCloverclub, alt: "Clover Club", title: "Clover Club", category: "cocktails" },
+  { src: imgCocktailsGringo, alt: "Gringo", title: "Gringo", category: "cocktails" },
+  { src: imgCocktailsNegroni, alt: "Negroni", title: "Negroni", category: "cocktails" },
+  { src: imgCocktailsPornStar, alt: "Porn Star Martini", title: "Porn Star Martini", category: "cocktails" },
+  { src: imgCocktailsVermouth, alt: "Vermouth cocktail", title: "Vermouth cocktail", category: "cocktails" },
+  { src: imgCocktailsWs, alt: "Whiskey Sour", title: "Whiskey Sour", category: "cocktails" },
+  { src: imgCocktailsAperol, alt: "Aperol Spritz", title: "Aperol Spritz", category: "cocktails" },
+  { src: imgCocktailsGintonic, alt: "Gin Tonic", title: "Gin Tonic", category: "cocktails" },
+  // Bar setup
+  { src: imgBar1, alt: "Bar setup", title: "Bar Setup 1", category: "setup" },
+  { src: imgBar2, alt: "Bar setup", title: "Bar Setup 2", category: "setup" },
+  { src: imgBar3, alt: "Bar setup", title: "Bar Setup 3", category: "setup" },
+  { src: imgBar4, alt: "Bar setup", title: "Bar Setup 4", category: "setup" },
+  { src: imgBar5, alt: "Bar setup", title: "Bar Setup 5", category: "setup" },
+  { src: imgBar6, alt: "Bar setup", title: "Bar Setup 6", category: "setup" },
+  // Events
+  { src: imgEventsGringo, alt: "Event - Gringo", title: "Event - Gringo", category: "events" },
+  { src: imgEventsNegroni, alt: "Event - Negroni", title: "Event - Negroni", category: "events" },
+  { src: imgEventsPornstar, alt: "Event - Porn Star Martini", title: "Event - Porn Star Martini", category: "events" },
+  { src: imgEventsWhiskeysour, alt: "Event - Whiskey Sour", title: "Event - Whiskey Sour", category: "events" },
 ];
 
 export function Gallery() {
   const { language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [lightboxController, setLightboxController] = useState({
-    toggler: false,
-    sourceIndex: 0,
-  });
-
-  const openLightboxOnImage = (index: number) => {
-    setLightboxController({
-      toggler: !lightboxController.toggler,
-      sourceIndex: index,
-    });
-  };
+  const lightboxRef = useRef<SimpleLightbox | null>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   const categories = [
     { id: "all", name: getTranslation(language, "allCategories") },
     { id: "cocktails", name: getTranslation(language, "galleryCocktails") },
     { id: "setup", name: getTranslation(language, "galleryBarSetup") },
+    { id: "events", name: getTranslation(language, "galleryEvents") },
   ];
 
   const filteredImages =
     selectedCategory === "all"
       ? galleryImages
       : galleryImages.filter((img) => img.category === selectedCategory);
+
+  useEffect(() => {
+    const links = galleryRef.current?.querySelectorAll(".gallery-lightbox");
+    if (!links?.length) return;
+
+    lightboxRef.current = new SimpleLightbox(".gallery-lightbox", {
+      overlayOpacity: 0.95,
+      captionsData: "title",
+      captionPosition: "bottom",
+      captionDelay: 0,
+      animationSpeed: 250,
+      widthRatio: 0.9,
+      heightRatio: 0.9,
+    });
+
+    return () => {
+      lightboxRef.current?.destroy();
+      lightboxRef.current = null;
+    };
+  }, [filteredImages]);
 
   return (
     <div className="min-h-screen bg-[#faf9f7] pt-24 pb-20">
@@ -195,10 +116,7 @@ export function Gallery() {
           {categories.map((category) => (
             <button
               key={category.id}
-              onClick={() => {
-                setSelectedCategory(category.id);
-                setLightboxController((prev) => ({ ...prev, sourceIndex: 0 }));
-              }}
+              onClick={() => setSelectedCategory(category.id)}
               className={`text-sm uppercase tracking-widest transition-colors duration-300 ${
                 selectedCategory === category.id
                   ? "text-primary font-bold border-b-2 border-secondary pb-1"
@@ -212,28 +130,24 @@ export function Gallery() {
 
         {/* Grid Section - Strict Grid, No Gaps or Small Gaps, Sharp Edges */}
         <motion.div
+          ref={galleryRef}
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-primary/10 border border-primary/10"
         >
-          {filteredImages.map((image, index) => (
+          {filteredImages.map((image) => (
             <motion.div
               layout
-              key={image.title}
+              key={`${image.category}-${image.title}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="group relative aspect-[4/3] overflow-hidden bg-white"
             >
-              <div
-                className="w-full h-full cursor-pointer relative"
-                onClick={() => openLightboxOnImage(index)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && openLightboxOnImage(index)
-                }
-                aria-label={image.alt}
+              <a
+                href={image.src}
+                className="gallery-lightbox block w-full h-full cursor-pointer relative"
+                title={image.title}
               >
                 <ImageWithFallback
                   src={image.src}
@@ -245,16 +159,10 @@ export function Gallery() {
                     {getTranslation(language, "galleryView")}
                   </span>
                 </div>
-              </div>
+              </a>
             </motion.div>
           ))}
         </motion.div>
-
-        <FsLightbox
-          toggler={lightboxController.toggler}
-          sources={filteredImages.map((img) => img.src)}
-          sourceIndex={lightboxController.sourceIndex}
-        />
       </Container>
     </div>
   );

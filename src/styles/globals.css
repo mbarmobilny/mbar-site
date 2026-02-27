@@ -293,7 +293,7 @@ select:focus-visible {
   border-radius: 0;
 }
 
-/* FsLightbox - darker overlay */
-.fslightbox-container {
-  background: rgba(0, 0, 0, 0.95) !important;
+/* SimpleLightbox - dark overlay */
+.sl-overlay {
+  background: #000 !important;
 }
