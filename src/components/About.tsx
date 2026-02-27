@@ -4,9 +4,9 @@ import { useLanguage } from "../context/LanguageContext";
 import { Container } from "./Container";
 import { SectionHeader } from "./SectionHeader";
 
-import imgYan from "../assets/about-hero.jpg";
-import imgIceBlock from "../assets/about-ice-block.jpg";
-import imgMixology from "../assets/about-mixology.jpg";
+import imgYan from "../assets/about-hero.webp";
+import imgIceBlock from "../assets/about-ice-block.webp";
+import imgMixology from "../assets/about-mixology.webp";
 
 export function About() {
   const { language } = useLanguage();
@@ -116,7 +116,7 @@ export function About() {
                 src={imgYan}
                 alt="Yan Maihur – mBar"
                 className="w-full h-full object-cover"
-                style={{ maxHeight: "620px" }}
+                style={{ maxHeight: "720px" }}
               />
               <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary/40 to-transparent" />
               <p className="absolute bottom-5 left-6 text-[10px] tracking-[0.2em] text-white/60 font-sans normal-case">
@@ -167,9 +167,6 @@ export function About() {
       {/* ── Divider strip ── */}
       <div className="w-full border-b border-primary/10 bg-[#faf9f7]">
         <Container className="py-5 flex items-center justify-between">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-primary/30">
-            mBar © 2019–2025
-          </span>
           <span className="text-[10px] uppercase tracking-[0.25em] text-primary/30">
             {getTranslation(language, "craftTagline")}
           </span>

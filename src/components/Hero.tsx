@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { getTranslation } from "../utils/translations";
 import { SwissButton } from "./ui/SwissButton";
 import { useLanguage } from "../context/LanguageContext";
-import heroImage from "../assets/hero.jpg";
+import heroImage from "../assets/hero.webp";
 
 interface HeroProps {
   onNavigate: (page: string) => void;

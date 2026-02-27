@@ -8,10 +8,18 @@ import { CallToAction } from "./components/CallToAction";
 import { Footer } from "./components/Footer";
 import { ScrollToTop } from "./components/ScrollToTop";
 
-const Gallery = lazy(() => import("./components/Gallery").then((m) => ({ default: m.Gallery })));
-const PriceList = lazy(() => import("./components/PriceList").then((m) => ({ default: m.PriceList })));
-const About = lazy(() => import("./components/About").then((m) => ({ default: m.About })));
-const ContactForm = lazy(() => import("./components/ContactForm").then((m) => ({ default: m.ContactForm })));
+const Gallery = lazy(() =>
+  import("./components/Gallery").then((m) => ({ default: m.Gallery })),
+);
+const PriceList = lazy(() =>
+  import("./components/PriceList").then((m) => ({ default: m.PriceList })),
+);
+const About = lazy(() =>
+  import("./components/About").then((m) => ({ default: m.About })),
+);
+const ContactForm = lazy(() =>
+  import("./components/ContactForm").then((m) => ({ default: m.ContactForm })),
+);
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -69,7 +77,14 @@ export default function App() {
           transition={pageTransition}
           className="flex-grow"
         >
-          <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center" aria-hidden="true" />}>
+          <Suspense
+            fallback={
+              <div
+                className="min-h-[50vh] flex items-center justify-center"
+                aria-hidden="true"
+              />
+            }
+          >
             {renderPage()}
           </Suspense>
         </motion.div>

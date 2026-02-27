@@ -9,57 +9,139 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 // Cocktails
-import imgCocktailsAviation from "../assets/gallery-cocktails-aviation.jpg";
-import imgCocktailsAperol from "../assets/gallery-cocktails-aperol.jpg";
-import imgCocktailsCloverclub from "../assets/gallery-cocktails-cloverclub.jpg";
-import imgCocktailsGintonic from "../assets/gallery-cocktails-gintonic.jpg";
-import imgCocktailsGringo from "../assets/gallery-cocktails-gringo.jpg";
-import imgCocktailsNegroni from "../assets/gallery-cocktails-negroni.jpg";
-import imgCocktailsPornStar from "../assets/gallery-cocktails-porn-star-martini.jpg";
-import imgCocktailsSiesta from "../assets/gallery-cocktails-siesta.jpg";
-import imgCocktailsVermouth from "../assets/gallery-cocktails-vermouth-cocktail.jpg";
-import imgCocktailsWs from "../assets/gallery-cocktails-ws.jpg";
-import imgCocktailsYennefer from "../assets/gallery-cocktails-yennefer.jpg";
+import imgCocktailsAviation from "../assets/gallery-cocktails-aviation.webp";
+import imgCocktailsAperol from "../assets/gallery-cocktails-aperol.webp";
+import imgCocktailsCloverclub from "../assets/gallery-cocktails-cloverclub.webp";
+import imgCocktailsGintonic from "../assets/gallery-cocktails-gintonic.webp";
+import imgCocktailsGringo from "../assets/gallery-cocktails-gringo.webp";
+import imgCocktailsNegroni from "../assets/gallery-cocktails-negroni.webp";
+import imgCocktailsPornStar from "../assets/gallery-cocktails-porn-star-martini.webp";
+import imgCocktailsSiesta from "../assets/gallery-cocktails-siesta.webp";
+import imgCocktailsVermouth from "../assets/gallery-cocktails-vermouth-cocktail.webp";
+import imgCocktailsWs from "../assets/gallery-cocktails-ws.webp";
+import imgCocktailsYennefer from "../assets/gallery-cocktails-yennefer.webp";
 
 // Bar setup
-import imgBar1 from "../assets/gallery-bar-setup-1.jpg";
-import imgBar2 from "../assets/gallery-bar-setup-2.jpg";
-import imgBar3 from "../assets/gallery-bar-setup-3.jpg";
-import imgBar4 from "../assets/gallery-bar-setup-4.jpg";
-import imgBar5 from "../assets/gallery-bar-setup-5.jpg";
-import imgBar6 from "../assets/gallery-bar-setup-6.jpg";
+import imgBar1 from "../assets/gallery-bar-setup-1.webp";
+import imgBar2 from "../assets/gallery-bar-setup-2.webp";
+import imgBar3 from "../assets/gallery-bar-setup-3.webp";
+import imgBar4 from "../assets/gallery-bar-setup-4.webp";
+import imgBar5 from "../assets/gallery-bar-setup-5.webp";
+import imgBar6 from "../assets/gallery-bar-setup-6.webp";
 
 // Events
-import imgEventsGringo from "../assets/gallery-events-gringo.jpg";
-import imgEventsNegroni from "../assets/gallery-events-negroni.jpg";
-import imgEventsPornstar from "../assets/gallery-events-pornstar.jpg";
-import imgEventsWhiskeysour from "../assets/gallery-events-whiskeysour.jpg";
+import imgEventsGringo from "../assets/gallery-events-gringo.webp";
+import imgEventsNegroni from "../assets/gallery-events-negroni.webp";
+import imgEventsPornstar from "../assets/gallery-events-pornstar.webp";
+import imgEventsWhiskeysour from "../assets/gallery-events-whiskeysour.webp";
+import imgEventsImg1 from "../assets/gallery-events-img1.webp";
+import imgEventsImg2 from "../assets/gallery-events-img2.webp";
+import imgEventsImg3 from "../assets/gallery-events-img3.webp";
 
 const galleryImages = [
   // Cocktails
-  { src: imgCocktailsAviation, alt: "Aviation", title: "Aviation", category: "cocktails" },
-  { src: imgCocktailsSiesta, alt: "Siesta", title: "Siesta", category: "cocktails" },
-  { src: imgCocktailsYennefer, alt: "Yennefer cocktail", title: "Yennefer", category: "cocktails" },
-  { src: imgCocktailsCloverclub, alt: "Clover Club", title: "Clover Club", category: "cocktails" },
-  { src: imgCocktailsGringo, alt: "Gringo", title: "Gringo", category: "cocktails" },
-  { src: imgCocktailsNegroni, alt: "Negroni", title: "Negroni", category: "cocktails" },
-  { src: imgCocktailsPornStar, alt: "Porn Star Martini", title: "Porn Star Martini", category: "cocktails" },
-  { src: imgCocktailsVermouth, alt: "Vermouth cocktail", title: "Vermouth cocktail", category: "cocktails" },
-  { src: imgCocktailsWs, alt: "Whiskey Sour", title: "Whiskey Sour", category: "cocktails" },
-  { src: imgCocktailsAperol, alt: "Aperol Spritz", title: "Aperol Spritz", category: "cocktails" },
-  { src: imgCocktailsGintonic, alt: "Gin Tonic", title: "Gin Tonic", category: "cocktails" },
+  {
+    src: imgCocktailsAviation,
+    alt: "Aviation",
+    title: "Aviation",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsSiesta,
+    alt: "Siesta",
+    title: "Siesta",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsYennefer,
+    alt: "Yennefer cocktail",
+    title: "Yennefer",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsCloverclub,
+    alt: "Clover Club",
+    title: "Clover Club",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsGringo,
+    alt: "Gringo",
+    title: "Gringo",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsNegroni,
+    alt: "Negroni",
+    title: "Negroni",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsPornStar,
+    alt: "Porn Star Martini",
+    title: "Porn Star Martini",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsVermouth,
+    alt: "Vermouth cocktail",
+    title: "Vermouth cocktail",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsWs,
+    alt: "Whiskey Sour",
+    title: "Whiskey Sour",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsAperol,
+    alt: "Aperol Spritz",
+    title: "Aperol Spritz",
+    category: "cocktails",
+  },
+  {
+    src: imgCocktailsGintonic,
+    alt: "Gin Tonic",
+    title: "Gin Tonic",
+    category: "cocktails",
+  },
   // Bar setup
   { src: imgBar1, alt: "Bar setup", title: "Bar Setup 1", category: "setup" },
+  { src: imgBar6, alt: "Bar setup", title: "Bar Setup 6", category: "setup" },
   { src: imgBar2, alt: "Bar setup", title: "Bar Setup 2", category: "setup" },
   { src: imgBar3, alt: "Bar setup", title: "Bar Setup 3", category: "setup" },
-  { src: imgBar4, alt: "Bar setup", title: "Bar Setup 4", category: "setup" },
   { src: imgBar5, alt: "Bar setup", title: "Bar Setup 5", category: "setup" },
-  { src: imgBar6, alt: "Bar setup", title: "Bar Setup 6", category: "setup" },
+  { src: imgBar4, alt: "Bar setup", title: "Bar Setup 4", category: "setup" },
+
   // Events
-  { src: imgEventsGringo, alt: "Event - Gringo", title: "Event - Gringo", category: "events" },
-  { src: imgEventsNegroni, alt: "Event - Negroni", title: "Event - Negroni", category: "events" },
-  { src: imgEventsPornstar, alt: "Event - Porn Star Martini", title: "Event - Porn Star Martini", category: "events" },
-  { src: imgEventsWhiskeysour, alt: "Event - Whiskey Sour", title: "Event - Whiskey Sour", category: "events" },
+  { src: imgEventsImg1, alt: "Event", title: "Event 1", category: "events" },
+  { src: imgEventsImg3, alt: "Event", title: "Event 3", category: "events" },
+  {
+    src: imgEventsNegroni,
+    alt: "Event - Negroni",
+    title: "Event - Negroni",
+    category: "events",
+  },
+  {
+    src: imgEventsPornstar,
+    alt: "Event - Porn Star Martini",
+    title: "Event - Porn Star Martini",
+    category: "events",
+  },
+  { src: imgEventsImg2, alt: "Event", title: "Event 2", category: "events" },
+  {
+    src: imgEventsWhiskeysour,
+    alt: "Event - Whiskey Sour",
+    title: "Event - Whiskey Sour",
+    category: "events",
+  },
+  {
+    src: imgEventsGringo,
+    alt: "Event - Gringo",
+    title: "Event - Gringo",
+    category: "events",
+  },
 ];
 
 export function Gallery() {

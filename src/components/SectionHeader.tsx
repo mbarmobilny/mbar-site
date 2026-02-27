@@ -35,8 +35,12 @@ export function SectionHeader({
         <div className="w-8 h-0.5 bg-secondary" />
       </div>
 
-      {/* Права колонка — заголовок + опис */}
-      <div className="lg:col-span-9 border-t-2 border-secondary pt-6">
+      {/* Права колонка — заголовок + опис. Довга лінія тільки на десктопі */}
+      <div className="lg:col-span-9">
+        <div
+          className="hidden lg:block border-t-2 border-secondary w-full mb-6"
+          aria-hidden="true"
+        />
         <div
           className={cn(
             "flex flex-col gap-4",
