@@ -26,8 +26,7 @@ VITE_FORMSPREE_ID=your_form_id
 
 ## Деплой
 
-- **Vercel**: `npm run build` → publish `dist/`
-- **Netlify**: `npm run build` → publish `dist/`
+- **Netlify**: `npm run build` → publish `dist/` (див. DEPLOY.md)
 
 ## Структура
 
