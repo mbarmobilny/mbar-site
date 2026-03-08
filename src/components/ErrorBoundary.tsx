@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import { ErrorFallback } from "./ErrorFallback";
 
 interface Props {
   children: ReactNode;
@@ -20,25 +21,17 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error("App error:", error, info);
   }
 
+  resetErrorBoundary = () => {
+    this.setState({ hasError: false, error: null });
+  };
+
   render() {
     if (this.state.hasError && this.state.error) {
       return (
-        <div className="min-h-screen bg-[#faf9f7] flex items-center justify-center p-8">
-          <div className="max-w-lg bg-white border border-primary/20 rounded-lg p-8 shadow-lg">
-            <h1 className="text-xl font-serif text-primary mb-4">
-              Щось пішло не так
-            </h1>
-            <p className="text-primary/80 mb-4 font-mono text-sm break-all">
-              {this.state.error.message}
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded hover:opacity-90"
-            >
-              Перезавантажити
-            </button>
-          </div>
-        </div>
+        <ErrorFallback
+          error={this.state.error}
+          onReset={this.resetErrorBoundary}
+        />
       );
     }
     return this.props.children;

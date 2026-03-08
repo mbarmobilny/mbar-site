@@ -6,6 +6,10 @@ export const translations = {
   pl: {
     // Navigation
     home: "Strona główna",
+    menuClose: "Zamknij menu",
+    menuOpen: "Otwórz menu",
+    switchToEn: "Switch to English",
+    switchToPl: "Przełącz na Polski",
     services: "Usługi",
     gallery: "Galeria",
     prices: "Cennik",
@@ -94,7 +98,7 @@ export const translations = {
     qualityDesc: "Używamy tylko najwyższej jakości składników i sprzętu",
     professionalism: "Profesjonalizm",
     professionalismDesc:
-      "Standard pracy pozostaje niezmienny — niezależnie od miejsca i skali wydarzenia",
+      "Standard pracy pozostaje niezmienny, niezależnie od miejsca i skali wydarzenia",
     creativity: "Kreatywność",
     creativityDesc:
       "Tworzymy unikalne koktajle dopasowane do twojego wydarzenia",
@@ -102,7 +106,7 @@ export const translations = {
     // Gallery
     galleryTitle: "Nasze Prace",
     gallerySubtitle: "Zobacz magię, którą tworzymy na wydarzeniach",
-    galleryWorkLabel: "Nasze realizacje",
+    galleryWorkLabel: "Portfolio",
     galleryView: "Powiększ",
     allCategories: "Wszystkie",
     galleryCocktails: "Koktajle",
@@ -201,6 +205,12 @@ export const translations = {
     findUsOn: "Znajdź nas na",
     allRightsReserved: "Wszystkie prawa zastrzeżone.",
 
+    // Error boundary
+    errorTitle: "Coś poszło nie tak",
+    errorReload: "Odśwież",
+    copied: "Skopiowano",
+    copy: "Skopiuj",
+
     // Process
     processTitle: "Proces współpracy",
     consultation: "Konsultacja",
@@ -212,6 +222,10 @@ export const translations = {
   en: {
     // Navigation
     home: "Home",
+    menuClose: "Close menu",
+    menuOpen: "Open menu",
+    switchToEn: "Switch to English",
+    switchToPl: "Przełącz na Polski",
     services: "Services",
     gallery: "Gallery",
     prices: "Pricing",
@@ -293,18 +307,25 @@ export const translations = {
     valuesTitle: "Our Values",
 
     ourValues: "Our Values",
+
+    // Error boundary
+    errorTitle: "Something went wrong",
+    errorReload: "Reload",
+    copied: "Copied",
+    copy: "Copy",
+
     quality: "Quality",
     qualityDesc: "We use only the highest quality ingredients and equipment",
     professionalism: "Professionalism",
     professionalismDesc:
-      "The standard of work remains consistent — regardless of the location or scale of the event",
+      "The standard of work remains consistent, regardless of the location or scale of the event",
     creativity: "Creativity",
     creativityDesc: "We create unique cocktails tailored to your event",
 
     // Gallery
     galleryTitle: "Our Work",
     gallerySubtitle: "See the magic we create at events",
-    galleryWorkLabel: "Our work",
+    galleryWorkLabel: "Portfolio",
     galleryView: "View",
     allCategories: "All",
     galleryCocktails: "Cocktails",
@@ -414,7 +435,7 @@ export const translations = {
 
 export const getTranslation = (
   language: string,
-  key: TranslationKey,
+  key: TranslationKey
 ): string => {
   return (
     translations[language as Language]?.[key] || translations.en[key] || key

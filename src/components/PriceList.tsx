@@ -1,12 +1,14 @@
+import { useMemo } from "react";
 import { Check } from "lucide-react";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
+import type { NavigateHandler } from "../types/navigation";
 import { SwissButton } from "./ui/SwissButton";
 import { Container } from "./Container";
 import { SectionHeader } from "./SectionHeader";
 
 interface PriceListProps {
-  onNavigate: (page: string, pkg?: string) => void;
+  onNavigate: NavigateHandler;
 }
 
 const getPackages = (language: string) => [
@@ -86,6 +88,7 @@ const isHeadline = (f: string) =>
 
 export function PriceList({ onNavigate }: PriceListProps) {
   const { language } = useLanguage();
+  const packages = useMemo(() => getPackages(language), [language]);
   const additionalServices = [
     {
       service: getTranslation(language, "additionalHour"),
@@ -125,7 +128,7 @@ export function PriceList({ onNavigate }: PriceListProps) {
 
         {/* ── Pricing cards ── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 border-t border-l border-primary/10 mb-32">
-          {getPackages(language).map((pkg, index) => (
+          {packages.map((pkg, index) => (
             <div
               key={index}
               className={`relative p-8 md:p-12 border-b border-r border-primary/10 flex flex-col justify-between hover:bg-white transition-colors duration-500 ${
@@ -196,17 +199,17 @@ export function PriceList({ onNavigate }: PriceListProps) {
         <div className="mb-32 bg-primary text-[#faf9f7] p-8 md:p-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             <div className="col-span-1">
-              <h4 className="text-3xl font-serif mb-6 leading-tight text-[#d4c4a8]">
+              <h4 className="text-3xl font-serif mb-6 leading-tight text-secondary">
                 {getTranslation(language, "bookingTerms")}
               </h4>
             </div>
             <div className="col-span-3 grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
               {bookingTerms.map((term, i) => (
                 <div key={i}>
-                  <span className="block text-[#d4c4a8] font-mono text-xs mb-2">
+                  <span className="block text-secondary font-mono text-xs mb-2">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="border-t border-[#d4c4a8] pt-4">
+                  <div className="border-t border-secondary pt-4">
                     <p className="font-medium text-lg leading-snug">{term}</p>
                   </div>
                 </div>
@@ -231,12 +234,12 @@ export function PriceList({ onNavigate }: PriceListProps) {
               {additionalServices.map((item, i) => (
                 <div
                   key={i}
-                  className="py-6 flex justify-between items-center hover:bg-white transition-colors px-4 -mx-4"
+                  className="py-6 flex justify-between items-center gap-6 px-4 -mx-4"
                 >
-                  <span className="text-lg text-primary font-medium">
+                  <span className="text-lg text-primary font-medium min-w-0 flex-1 pr-4">
                     {item.service}
                   </span>
-                  <span className="text-lg text-primary/60 font-serif">
+                  <span className="text-lg text-primary/60 font-serif whitespace-nowrap flex-shrink-0">
                     {item.price}
                   </span>
                 </div>

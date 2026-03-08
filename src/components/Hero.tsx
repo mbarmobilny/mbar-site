@@ -1,12 +1,13 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { motion } from "motion/react";
 import { getTranslation } from "../utils/translations";
 import { SwissButton } from "./ui/SwissButton";
 import { useLanguage } from "../context/LanguageContext";
+import type { NavigateHandler } from "../types/navigation";
 import heroImage from "../assets/hero.webp";
 
 interface HeroProps {
-  onNavigate: (page: string) => void;
+  onNavigate: NavigateHandler;
 }
 
 export function Hero({ onNavigate }: HeroProps) {

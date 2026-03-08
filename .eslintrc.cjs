@@ -5,6 +5,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
   ],
   ignorePatterns: ['dist', 'build', '.eslintrc.cjs', 'node_modules'],
   parser: '@typescript-eslint/parser',
@@ -13,5 +14,5 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: { jsx: true },
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'jsx-a11y'],
 }

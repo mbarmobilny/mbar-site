@@ -2,8 +2,8 @@ import { type ReactNode } from "react";
 import { cn } from "./ui/utils";
 
 /**
- * Container — стандартна обгортка макету mBar.
- * Обмежує ширину до 1920px та додає responsive відступи.
+ * Container — standard mBar layout wrapper.
+ * Constrains width to 1920px and adds responsive padding.
  */
 interface ContainerProps {
   children: ReactNode;

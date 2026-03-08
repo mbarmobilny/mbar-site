@@ -3,12 +3,13 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
+import type { NavigateHandler } from "../types/navigation";
 import logo from "../assets/logo.png";
 import { motion, AnimatePresence } from "motion/react";
 
 interface HeaderProps {
   currentPage: string;
-  onNavigate: (page: string) => void;
+  onNavigate: NavigateHandler;
 }
 
 export function Header({ currentPage, onNavigate }: HeaderProps) {
@@ -36,21 +37,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 className="flex items-center justify-center hover:opacity-80 transition-opacity"
                 aria-label="mBar Home"
               >
-                <span
-                  style={{ display: "block", maxWidth: 100, maxHeight: 60 }}
-                >
-                  <img
-                    src={logo}
-                    alt="mBar Logo"
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: 60,
-                      width: "auto",
-                      height: "auto",
-                      display: "block",
-                      objectFit: "contain",
-                    }}
-                  />
+                <span className="header-logo-wrapper">
+                  <img src={logo} alt="mBar Logo" className="header-logo-img" />
                 </span>
               </button>
             </div>
@@ -60,6 +48,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
+                  aria-current={currentPage === item.id ? "page" : undefined}
                   className={`relative text-sm font-medium tracking-widest uppercase py-2 transition-colors ${
                     currentPage === item.id
                       ? "text-primary font-semibold"
@@ -92,7 +81,11 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className="p-2 text-primary hover:text-secondary transition-colors"
                   aria-expanded={isMenuOpen}
-                  aria-label={isMenuOpen ? "Zamknij menu" : "Otwórz menu"}
+                  aria-label={
+                    isMenuOpen
+                      ? getTranslation(language, "menuClose")
+                      : getTranslation(language, "menuOpen")
+                  }
                 >
                   {isMenuOpen ? (
                     <X className="h-6 w-6" />
@@ -122,6 +115,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                     onNavigate(item.id);
                     setIsMenuOpen(false);
                   }}
+                  aria-current={currentPage === item.id ? "page" : undefined}
                   className={`text-2xl font-serif text-left py-2 border-b border-primary/5 ${
                     currentPage === item.id
                       ? "text-primary font-medium"
@@ -140,8 +134,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                   className="text-lg font-medium text-primary/70 hover:text-primary"
                 >
                   {language === "pl"
-                    ? "Switch to English"
-                    : "Przełącz na Polski"}
+                    ? getTranslation(language, "switchToEn")
+                    : getTranslation(language, "switchToPl")}
                 </button>
               </div>
             </div>

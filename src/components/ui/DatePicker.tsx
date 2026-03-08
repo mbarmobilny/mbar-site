@@ -39,7 +39,7 @@ export function DatePicker({
           className={cn(
             "w-full justify-start text-left font-light rounded-none border-x-0 border-t-0 border-b border-primary/20 bg-transparent px-0 py-4 text-primary hover:bg-transparent hover:text-primary shadow-none h-auto text-base",
             !date && "text-primary/40",
-            className,
+            className
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4 opacity-50 hidden" />

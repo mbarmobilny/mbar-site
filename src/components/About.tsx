@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
 import { Container } from "./Container";
@@ -39,14 +39,12 @@ export function About() {
   ];
 
   const values = [
-    { num: "01", key: "quality" as const, descKey: "qualityDesc" as const },
+    { key: "quality" as const, descKey: "qualityDesc" as const },
     {
-      num: "02",
       key: "professionalism" as const,
       descKey: "professionalismDesc" as const,
     },
     {
-      num: "03",
       key: "creativity" as const,
       descKey: "creativityDesc" as const,
     },
@@ -67,7 +65,7 @@ export function About() {
       <Container className="pt-0 pb-0">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border-b border-primary/10">
           {/* Text column */}
-          <div className="lg:col-span-6 flex flex-col justify-between py-16 pr-0 lg:pr-20 border-b lg:border-b-0 lg:border-r border-primary/10">
+          <div className="lg:col-span-6 flex flex-col justify-between pr-0 lg:pr-20 border-b lg:border-b-0 lg:border-r border-primary/10">
             <div>
               <div className="max-w-lg">
                 <p className="text-primary/80 font-light leading-relaxed mb-8 text-xl">
@@ -80,7 +78,7 @@ export function About() {
             </div>
 
             {/* Meta strip */}
-            <div className="flex items-center gap-8 mt-12 pt-8 border-t border-primary/10">
+            <div className="flex items-center gap-8 mt-12 py-8 border-t border-primary/10">
               {[
                 {
                   label: getTranslation(language, "founder"),
@@ -115,8 +113,8 @@ export function About() {
               <ImageWithFallback
                 src={imgYan}
                 alt="Yan Maihur – mBar"
-                className="w-full h-full object-cover"
-                style={{ maxHeight: "720px" }}
+                className="w-full h-full object-cover about-hero-img"
+                loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary/40 to-transparent" />
               <p className="absolute bottom-5 left-6 text-[10px] tracking-[0.2em] text-white/60 font-sans normal-case">
@@ -141,18 +139,9 @@ export function About() {
                 <span className="text-secondary text-[10px] uppercase tracking-[0.2em]">
                   {stat.label}
                 </span>
-                <span
-                  className="font-serif text-[#faf9f7]"
-                  style={{
-                    fontSize: "clamp(4rem, 8vw, 9rem)",
-                    lineHeight: 0.85,
-                  }}
-                >
+                <span className="font-serif text-[#faf9f7] about-stats-value">
                   {stat.prefix && (
-                    <span
-                      className="text-secondary"
-                      style={{ fontSize: "0.5em", verticalAlign: "middle" }}
-                    >
+                    <span className="text-secondary about-stats-prefix">
                       {stat.prefix}
                     </span>
                   )}
@@ -187,13 +176,11 @@ export function About() {
                   src={block.src}
                   alt={block.alt}
                   className="w-full h-full object-cover opacity-10 group-hover:opacity-15 transition-opacity duration-700"
+                  loading="lazy"
                 />
               </div>
               {/* Decorative numeral */}
-              <span
-                className="absolute top-4 right-6 font-serif text-primary/[0.06] select-none pointer-events-none z-0"
-                style={{ fontSize: "clamp(8rem, 18vw, 18rem)", lineHeight: 1 }}
-              >
+              <span className="absolute top-4 right-6 font-serif text-primary/[0.06] select-none pointer-events-none z-0 about-signature-num">
                 {block.num}
               </span>
               <div className="relative z-10 p-12 md:p-16 flex flex-col justify-between gap-10 min-h-[300px]">
@@ -212,13 +199,13 @@ export function About() {
       </Container>
 
       {/* ── Values ── */}
-      <div className="w-full bg-primary text-[#faf9f7] py-16 md:py-20">
+      <div className="w-full bg-primary text-[#faf9f7] py-12 md:py-20">
         <Container>
-          <div className="flex items-end justify-between border-b border-white/10 pb-8 mb-10">
-            <h3 className="text-4xl md:text-6xl font-serif">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-white/10 pb-6 md:pb-8 mb-8 md:mb-10">
+            <h3 className="text-3xl md:text-6xl font-serif">
               {getTranslation(language, "valuesTitle")}
             </h3>
-            <p className="text-white/40 text-sm font-light leading-relaxed max-w-xs text-right hidden md:block">
+            <p className="text-white/40 text-sm font-light leading-relaxed max-w-xs md:text-right hidden md:block">
               {getTranslation(language, "ourValues")}
             </p>
           </div>
@@ -226,19 +213,13 @@ export function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
             {values.map((v) => (
               <div
-                key={v.num}
-                className="px-0 md:px-10 first:pl-0 last:pr-0 py-8 md:py-0 flex flex-col gap-4"
+                key={v.key}
+                className="flex flex-col gap-3 py-8 md:py-12 md:px-8 lg:px-12 first:md:pl-0 last:md:pr-0"
               >
-                <span
-                  className="font-serif text-secondary/20 leading-none select-none"
-                  style={{ fontSize: "clamp(3.5rem, 7vw, 6rem)" }}
-                >
-                  {v.num}
-                </span>
-                <h4 className="text-xl md:text-2xl font-serif">
+                <h4 className="text-lg md:text-2xl font-serif text-[#faf9f7]">
                   {getTranslation(language, v.key)}
                 </h4>
-                <p className="text-white/50 leading-relaxed font-light border-l-2 border-secondary/50 pl-5">
+                <p className="text-white/50 leading-relaxed font-light border-l-2 border-secondary/50 pl-4 md:pl-5 text-sm min-w-0 break-words">
                   {getTranslation(language, v.descKey)}
                 </p>
               </div>

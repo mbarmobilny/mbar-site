@@ -2,17 +2,12 @@ import { Instagram, Facebook } from "lucide-react";
 import { getTranslation } from "../utils/translations";
 import { Container } from "./Container";
 import { useLanguage } from "../context/LanguageContext";
-
-const PHONE = import.meta.env.VITE_PHONE || "+48578224721";
-const EMAIL = import.meta.env.VITE_EMAIL || "mbarmobilny@gmail.com";
-const INSTAGRAM_URL =
-  import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/mbarmobilny";
-const FACEBOOK_URL =
-  import.meta.env.VITE_FACEBOOK_URL ||
-  "https://www.facebook.com/share/17HJkD8LRt/";
+import { PHONE, EMAIL, INSTAGRAM_URL, FACEBOOK_URL } from "../utils/constants";
+import type { NavigateHandler } from "../types/navigation";
+import { ContactWithCopy } from "./CopyableContactLink";
 
 interface FooterProps {
-  onNavigate: (page: string) => void;
+  onNavigate: NavigateHandler;
 }
 
 export function Footer({ onNavigate }: FooterProps) {
@@ -44,18 +39,18 @@ export function Footer({ onNavigate }: FooterProps) {
               {language === "pl" ? "Menu" : "Navigation"}
             </h4>
             <ul className="space-y-4">
-              {(
-                ["home", "services", "gallery", "prices", "contact"] as const
-              ).map((item) => (
-                <li key={item}>
-                  <button
-                    onClick={() => onNavigate(item)}
-                    className="text-lg hover:text-secondary transition-colors"
-                  >
-                    {getTranslation(language, item)}
-                  </button>
-                </li>
-              ))}
+              {(["home", "gallery", "prices", "about", "contact"] as const).map(
+                (item) => (
+                  <li key={item}>
+                    <button
+                      onClick={() => onNavigate(item)}
+                      className="text-lg hover:text-secondary transition-colors"
+                    >
+                      {getTranslation(language, item)}
+                    </button>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
@@ -65,20 +60,22 @@ export function Footer({ onNavigate }: FooterProps) {
             </h4>
             <ul className="space-y-4">
               <li>
-                <a
+                <ContactWithCopy
                   href={`tel:${PHONE.replace(/\s/g, "")}`}
-                  className="text-lg hover:text-secondary transition-colors block"
+                  textToCopy={PHONE.replace(/\s/g, "")}
+                  linkClassName="text-lg hover:text-secondary transition-colors"
                 >
                   {PHONE}
-                </a>
+                </ContactWithCopy>
               </li>
               <li>
-                <a
+                <ContactWithCopy
                   href={`mailto:${EMAIL}`}
-                  className="text-lg hover:text-secondary transition-colors block"
+                  textToCopy={EMAIL}
+                  linkClassName="text-lg hover:text-secondary transition-colors"
                 >
                   {EMAIL}
-                </a>
+                </ContactWithCopy>
               </li>
               <li className="pt-4 flex gap-4">
                 <a

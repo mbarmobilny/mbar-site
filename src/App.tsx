@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Toaster } from "./components/ui/sonner";
 import { Header } from "./components/Header";
@@ -10,16 +10,16 @@ import { IceCubeSpinner } from "./components/IceCubeSpinner";
 import { ScrollToTop } from "./components/ScrollToTop";
 
 const Gallery = lazy(() =>
-  import("./components/Gallery").then((m) => ({ default: m.Gallery })),
+  import("./components/Gallery").then((m) => ({ default: m.Gallery }))
 );
 const PriceList = lazy(() =>
-  import("./components/PriceList").then((m) => ({ default: m.PriceList })),
+  import("./components/PriceList").then((m) => ({ default: m.PriceList }))
 );
 const About = lazy(() =>
-  import("./components/About").then((m) => ({ default: m.About })),
+  import("./components/About").then((m) => ({ default: m.About }))
 );
 const ContactForm = lazy(() =>
-  import("./components/ContactForm").then((m) => ({ default: m.ContactForm })),
+  import("./components/ContactForm").then((m) => ({ default: m.ContactForm }))
 );
 
 export default function App() {
@@ -29,8 +29,11 @@ export default function App() {
   const handleNavigate = (page: string, pkg?: string) => {
     setCurrentPage(page);
     if (pkg !== undefined) setSelectedPackage(pkg);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },

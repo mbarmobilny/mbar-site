@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { motion } from "motion/react";
 import {
   Martini,
@@ -11,6 +12,7 @@ import {
   FileText,
   Calendar,
   PartyPopper,
+  ClipboardList,
 } from "lucide-react";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
@@ -46,7 +48,7 @@ const getServices = (language: string) => [
 
 const getAdditionalServices = (language: string) => [
   {
-    icon: Martini,
+    icon: ClipboardList,
     title: getTranslation(language, "customMenu"),
     description: getTranslation(language, "customMenuDesc"),
   },
@@ -69,8 +71,11 @@ const getAdditionalServices = (language: string) => [
 
 export function Services() {
   const { language } = useLanguage();
-  const services = getServices(language);
-  const additionalServices = getAdditionalServices(language);
+  const services = useMemo(() => getServices(language), [language]);
+  const additionalServices = useMemo(
+    () => getAdditionalServices(language),
+    [language]
+  );
 
   return (
     <section className="bg-[#faf9f7] pt-12 md:pt-24 pb-0 border-t border-primary/10">

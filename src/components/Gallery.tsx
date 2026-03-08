@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { motion } from "motion/react";
 import { useState, useEffect, useRef } from "react";
 import { getTranslation } from "../utils/translations";
@@ -183,7 +183,7 @@ export function Gallery() {
   }, [filteredImages]);
 
   return (
-    <div className="min-h-screen bg-[#faf9f7] pt-24 pb-20">
+    <div className="min-h-screen bg-[#faf9f7] pt-16 pb-20">
       <Container>
         {/* Header Section */}
         <SectionHeader
@@ -199,6 +199,7 @@ export function Gallery() {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
+              aria-pressed={selectedCategory === category.id}
               className={`text-sm uppercase tracking-widest transition-colors duration-300 ${
                 selectedCategory === category.id
                   ? "text-primary font-bold border-b-2 border-secondary pb-1"
@@ -235,6 +236,7 @@ export function Gallery() {
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                   <span className="bg-white/90 text-primary px-6 py-3 text-sm uppercase tracking-widest font-medium backdrop-blur-sm">

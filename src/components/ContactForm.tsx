@@ -14,6 +14,14 @@ import { SwissButton } from "./ui/SwissButton";
 import { Container } from "./Container";
 import { SectionHeader } from "./SectionHeader";
 import { useLanguage } from "../context/LanguageContext";
+import {
+  PHONE,
+  EMAIL,
+  FORMSPREE_ID,
+  INSTAGRAM_URL,
+  FACEBOOK_URL,
+} from "../utils/constants";
+import { ContactWithCopy } from "./CopyableContactLink";
 
 interface ContactFormProps {
   selectedPackage?: string;
@@ -29,15 +37,6 @@ const EMPTY_FORM = {
   message: "",
   packageChoice: "",
 };
-
-const PHONE = import.meta.env.VITE_PHONE || "+48578224721";
-const EMAIL = import.meta.env.VITE_EMAIL || "mbarmobilny@gmail.com";
-const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID;
-const INSTAGRAM_URL =
-  import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/mbarmobilny";
-const FACEBOOK_URL =
-  import.meta.env.VITE_FACEBOOK_URL ||
-  "https://www.facebook.com/share/17HJkD8LRt/";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -77,7 +76,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
       toast.error(
         t("eventDate") +
           " — " +
-          (language === "pl" ? "proszę wybrać datę" : "please select a date"),
+          (language === "pl" ? "proszę wybrać datę" : "please select a date")
       );
       return;
     }
@@ -93,7 +92,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
       toast.error(
         language === "pl"
           ? "Proszę podać prawidłowy adres e-mail."
-          : "Please enter a valid email address.",
+          : "Please enter a valid email address."
       );
       return;
     }
@@ -135,15 +134,16 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
       toast.success(
         language === "pl"
           ? "Dziękujemy! Skontaktujemy się w ciągu 24 godzin."
-          : "Thank you! We'll get back to you within 24 hours.",
+          : "Thank you! We'll get back to you within 24 hours."
       );
       setFormData(EMPTY_FORM);
       setDate(undefined);
-    } catch {
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
       toast.error(
         language === "pl"
           ? "Wystąpił błąd. Spróbuj wysłać e-mail bezpośrednio."
-          : "Something went wrong. Please try sending an email directly.",
+          : "Something went wrong. Please try sending an email directly."
       );
     } finally {
       setIsSubmitting(false);
@@ -160,7 +160,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
       setEmailError(
         language === "pl"
           ? "Nieprawidłowy adres e-mail"
-          : "Invalid email address",
+          : "Invalid email address"
       );
     } else {
       setEmailError(null);
@@ -178,10 +178,29 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
       label: t("phone"),
       value: PHONE,
       href: `tel:${PHONE.replace(/\s/g, "")}`,
+      textToCopy: PHONE.replace(/\s/g, ""),
     },
-    { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
-    { icon: MapPin, label: t("area"), value: t("serviceArea") },
-    { icon: Calendar, label: t("response"), value: t("responseTime") },
+    {
+      icon: Mail,
+      label: "Email",
+      value: EMAIL,
+      href: `mailto:${EMAIL}`,
+      textToCopy: EMAIL,
+    },
+    {
+      icon: MapPin,
+      label: t("area"),
+      value: t("serviceArea"),
+      href: undefined,
+      textToCopy: undefined,
+    },
+    {
+      icon: Calendar,
+      label: t("response"),
+      value: t("responseTime"),
+      href: undefined,
+      textToCopy: undefined,
+    },
   ];
 
   const whyUsItems = [
@@ -209,31 +228,35 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                 {t("contactDetails")}
               </h3>
               <div className="space-y-8">
-                {contactItems.map(({ icon: Icon, label, value, href }) => (
-                  <div
-                    key={label}
-                    className="group flex items-start gap-6 hover:translate-x-2 transition-transform duration-300"
-                  >
-                    <Icon className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
-                    <div>
-                      <span className="block text-xs uppercase tracking-widest text-primary/40 mb-1">
-                        {label}
-                      </span>
-                      {href ? (
-                        <a
-                          href={href}
-                          className="text-xl text-primary font-light hover:text-secondary transition-colors"
-                        >
-                          {value}
-                        </a>
-                      ) : (
-                        <p className="text-xl text-primary font-light">
-                          {value}
-                        </p>
-                      )}
+                {contactItems.map(
+                  ({ icon: Icon, label, value, href, textToCopy }) => (
+                    <div
+                      key={label}
+                      className="group flex items-start gap-6 hover:translate-x-2 transition-transform duration-300"
+                    >
+                      <Icon className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
+                      <div>
+                        <span className="block text-xs uppercase tracking-widest text-primary/40 mb-1">
+                          {label}
+                        </span>
+                        {href && textToCopy ? (
+                          <ContactWithCopy
+                            href={href}
+                            textToCopy={textToCopy}
+                            linkClassName="text-xl text-primary font-light hover:text-secondary transition-colors"
+                            iconClassName="text-primary"
+                          >
+                            {value}
+                          </ContactWithCopy>
+                        ) : (
+                          <p className="text-xl text-primary font-light">
+                            {value}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
                 <div className="pt-6 border-t border-primary/10">
                   <span className="block text-xs uppercase tracking-widest text-primary/40 mb-3">
                     {t("findUsOn")}

@@ -1,18 +1,18 @@
 import { cn } from "./ui/utils";
 
 /**
- * SectionHeader — Swiss editorial заголовок секції.
+ * SectionHeader — Swiss editorial section heading.
  *
- * Розкладка:
- *   [3/12] мітка + бежева риска
- *   [9/12] border-t-2 border-secondary | великий заголовок + опис
+ * Layout:
+ *   [3/12] label + decorative line
+ *   [9/12] border-t-2 border-secondary | main title + description
  */
 interface SectionHeaderProps {
-  /** Мала підпис зліва (наприклад "Scope of services") */
+  /** Small label on the left (e.g. "Scope of services") */
   label: string;
-  /** Великий serif-заголовок */
+  /** Main serif title */
   title: string;
-  /** Необов'язковий підзаголовок праворуч */
+  /** Optional subtitle on the right */
   description?: string;
   className?: string;
 }
@@ -35,7 +35,7 @@ export function SectionHeader({
         <div className="w-8 h-0.5 bg-secondary" />
       </div>
 
-      {/* Права колонка — заголовок + опис. Довга лінія тільки на десктопі */}
+      {/* Right column — title + description. Long line only on desktop */}
       <div className="lg:col-span-9">
         <div
           className="hidden lg:block border-t-2 border-secondary w-full mb-6"
@@ -44,13 +44,10 @@ export function SectionHeader({
         <div
           className={cn(
             "flex flex-col gap-4",
-            description && "md:flex-row md:items-end md:justify-between",
+            description && "md:flex-row md:items-end md:justify-between"
           )}
         >
-          <h2
-            className="font-serif text-primary leading-[0.9] tracking-tight"
-            style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}
-          >
+          <h2 className="font-serif text-primary leading-[0.9] tracking-tight section-header-title">
             {title}
           </h2>
           {description && (

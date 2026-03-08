@@ -3437,7 +3437,7 @@
   --popover-foreground: #faf9f7;
   --primary: #1a4a3f;
   --primary-foreground: #faf9f7;
-  --secondary: #d4c4a8;
+  --secondary: #b8945f;
   --secondary-foreground: #11352e;
   --muted: #2d5a52;
   --muted-foreground: #f0ece2;
@@ -3449,14 +3449,14 @@
   --border: #e4e2d44d;
   --input: transparent;
   --input-background: #1a4a3f;
-  --switch-background: #d4c4a8;
+  --switch-background: #b8945f;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #d4c4a8;
+  --ring: #b8945f;
   --chart-1: #1a4a3f;
   --chart-2: #2d5a52;
   --chart-3: #4a7a6f;
-  --chart-4: #d4c4a8;
+  --chart-4: #b8945f;
   --chart-5: #a8986d;
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
@@ -3534,49 +3534,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 button,
-a,
-.card,
-.hover-effect {
+a {
   transition:
     background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gradient-primary {
-  background: linear-gradient(135deg, #11352e 0%, #1a4a3f 50%, #2d5a52 100%);
-}
-
-.gradient-background {
-  background: linear-gradient(135deg, #11352e 0%, #1a4a3f 30%, #11352e 100%);
-}
-
-.gradient-beige {
-  background: linear-gradient(135deg, #d4c4a8 0%, #f0e6d6 100%);
-}
-
-.glass {
-  -webkit-backdrop-filter: blur(10px);
-  background: #ffffff1a;
-  border: 1px solid #fff3;
-}
-
-.shadow-glow {
-  box-shadow:
-    0 20px 25px -5px #0000001a,
-    0 10px 10px -5px #0000000a,
-    0 0 0 1px #ffffff0d;
-}
-
-.shadow-soft {
-  box-shadow:
-    0 4px 6px -1px #11352e1a,
-    0 2px 4px -1px #11352e0f;
-}
-
-.text-balance {
-  text-wrap: balance;
 }
 
 :focus-visible {
@@ -4019,4 +3982,62 @@ select:focus-visible {
   50% {
     transform: rotateX(-25deg) rotateY(180deg);
   }
+}
+
+/* Header logo */
+.header-logo-wrapper {
+  display: block;
+  max-width: 100px;
+  max-height: 60px;
+}
+
+.header-logo-img {
+  max-width: 100%;
+  max-height: 60px;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* CallToAction — highlighted word stroke */
+
+/* SectionHeader — responsive title */
+.section-header-title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* About — hero image */
+.about-hero-img {
+  max-height: 720px;
+}
+
+/* About — stats value */
+.about-stats-value {
+  font-size: clamp(4rem, 8vw, 9rem);
+  line-height: 0.85;
+}
+
+.about-stats-prefix {
+  font-size: 0.5em;
+  vertical-align: middle;
+}
+
+/* About — signature block numeral */
+.about-signature-num {
+  font-size: clamp(8rem, 18vw, 18rem);
+  line-height: 1;
+}
+
+/* Contact copy button — hover effect */
+.contact-copy-btn {
+  opacity: 0.6;
+  cursor: pointer;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.contact-copy-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
 }

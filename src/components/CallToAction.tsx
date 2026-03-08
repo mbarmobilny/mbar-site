@@ -2,9 +2,10 @@ import { motion } from "motion/react";
 import { SwissButton } from "./ui/SwissButton";
 import { Container } from "./Container";
 import { useLanguage } from "../context/LanguageContext";
+import type { NavigateHandler } from "../types/navigation";
 
 interface CallToActionProps {
-  onNavigate: (page: string) => void;
+  onNavigate: NavigateHandler;
 }
 
 export function CallToAction({ onNavigate }: CallToActionProps) {
@@ -23,24 +24,13 @@ export function CallToAction({ onNavigate }: CallToActionProps) {
             <h3 className="text-3xl md:text-5xl font-serif mb-4 leading-tight tracking-tight">
               {language === "pl" ? (
                 <span>
-                  Gotowy na{" "}
-                  <span
-                    className="text-secondary"
-                    style={{ WebkitTextStroke: "1px #d4c4a8" }}
-                  >
-                    niezwykłe
-                  </span>{" "}
+                  Gotowy na <span className="text-secondary">niezwykłe</span>{" "}
                   wrażenia?
                 </span>
               ) : (
                 <span>
                   Ready for an{" "}
-                  <span
-                    className="text-secondary"
-                    style={{ WebkitTextStroke: "1px #d4c4a8" }}
-                  >
-                    extraordinary
-                  </span>{" "}
+                  <span className="text-secondary">extraordinary</span>{" "}
                   experience?
                 </span>
               )}

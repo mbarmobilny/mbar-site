@@ -3,16 +3,16 @@ import { type ReactNode } from "react";
 import { cn } from "./utils";
 
 /**
- * SwissButton — фірмова кнопка з wipe-анімацією знизу вгору.
+ * SwissButton — branded button with wipe animation from bottom to top.
  *
  * variant:
- *   "primary"   — обведення border-primary, заливка bg-primary (використовується скрізь)
- *   "secondary" — dim обведення, та сама заливка (другорядні дії)
- *   "inverse"   — вже заповнена bg-primary, overlay bg-white/10 при hover (форма)
+ *   "primary"   — border-primary outline, bg-primary fill (used everywhere)
+ *   "secondary" — dim outline, same fill (secondary actions)
+ *   "inverse"   — pre-filled bg-primary, overlay bg-white/10 on hover (forms)
  *
  * justify:
- *   "center"  — текст і стрілка по центру (CTA, форма)
- *   "between" — текст зліва, стрілка справа (Hero)
+ *   "center"  — text and arrow centered (CTA, form)
+ *   "between" — text left, arrow right (Hero)
  */
 
 type Variant = "primary" | "secondary" | "inverse";
@@ -63,7 +63,7 @@ export function SwissButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        // базові стилі
+        // base styles
         "group relative overflow-hidden",
         "px-8 py-4 text-xs uppercase tracking-[0.25em]",
         "flex items-center gap-4",
@@ -71,28 +71,28 @@ export function SwissButton({
         disabled && "opacity-50 cursor-not-allowed pointer-events-none",
         // justify
         justify === "between" ? "justify-between" : "justify-center",
-        // ширина
+        // width
         fullWidth && "w-full",
-        // варіант
+        // variant
         wrapper,
-        // зовнішні overrides через cn / tailwind-merge
-        className,
+        // external overrides via cn / tailwind-merge
+        className
       )}
     >
-      {/* Заливка-wipe */}
+      {/* Fill wipe */}
       <span
         aria-hidden
         className={cn(
           "absolute inset-0 translate-y-full",
           "group-hover:translate-y-0 transition-transform duration-500 ease-in-out",
-          fill,
+          fill
         )}
       />
 
       {/* Текст */}
       <span className="relative z-10 whitespace-nowrap">{children}</span>
 
-      {/* Роздільник + стрілка */}
+      {/* Separator + arrow */}
       <span className="relative z-10 flex items-center gap-3 shrink-0">
         {showSeparator && (
           <span className="w-px h-4 bg-current opacity-30 group-hover:opacity-50 transition-opacity duration-500" />

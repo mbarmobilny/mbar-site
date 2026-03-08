@@ -23,9 +23,9 @@ if (gaId) {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <ErrorBoundary>
-    <LanguageProvider>
+  <LanguageProvider>
+    <ErrorBoundary>
       <App />
-    </LanguageProvider>
-  </ErrorBoundary>,
+    </ErrorBoundary>
+  </LanguageProvider>
 );
