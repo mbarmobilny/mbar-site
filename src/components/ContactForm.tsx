@@ -429,11 +429,10 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     <option value="" disabled>
                       {t("selectNumber")}
                     </option>
-                    <option value="25-50">25–50</option>
-                    <option value="50-100">50–100</option>
-                    <option value="100-150">100–150</option>
-                    <option value="150-200">150–200</option>
-                    <option value="200+">200+</option>
+                    <option value="1-50">1–50</option>
+                    <option value="51-70">51–70</option>
+                    <option value="71-100">71–100</option>
+                    <option value="101+">101+</option>
                   </select>
                 </div>
               </div>
