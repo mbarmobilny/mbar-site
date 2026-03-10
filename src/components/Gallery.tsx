@@ -385,6 +385,35 @@ export function Gallery() {
     const nextIndex = (activeVideoIndex + 1) % filteredVideos.length;
     setVideoOpenId(filteredVideos[nextIndex].videoId);
   }, [activeVideoIndex, filteredVideos, hasVideoNavigation]);
+  const handleVideoSwipeStart = useCallback(
+    (touchX: number, touchY: number) => {
+      if (!hasVideoNavigation) return;
+      videoSwipeStartRef.current = { x: touchX, y: touchY };
+    },
+    [hasVideoNavigation]
+  );
+  const handleVideoSwipeEnd = useCallback(
+    (touchX: number, touchY: number) => {
+      if (!hasVideoNavigation || !videoSwipeStartRef.current) return;
+
+      const dx = touchX - videoSwipeStartRef.current.x;
+      const dy = touchY - videoSwipeStartRef.current.y;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+
+      if (
+        absDx >= VIDEO_SWIPE_THRESHOLD &&
+        absDx > absDy * VIDEO_SWIPE_DIRECTION_RATIO
+      ) {
+        suppressBackdropCloseRef.current = true;
+        if (dx > 0) openPrevVideo();
+        else openNextVideo();
+      }
+
+      videoSwipeStartRef.current = null;
+    },
+    [hasVideoNavigation, openNextVideo, openPrevVideo]
+  );
 
   const expandLg = useMemo(
     () => getExpandRowIndices(filteredItems.length, 3),
@@ -485,7 +514,12 @@ export function Gallery() {
           {mediaFilters.map((filter) => (
             <button
               key={filter.id}
-              onClick={() => setSelectedMediaFilter(filter.id)}
+              onClick={() => {
+                setSelectedMediaFilter(filter.id);
+                if (filter.id !== "video") {
+                  setVideoOpenId(null);
+                }
+              }}
               aria-pressed={selectedMediaFilter === filter.id}
               className={`text-sm uppercase tracking-widest transition-colors duration-300 ${
                 selectedMediaFilter === filter.id
@@ -540,7 +574,7 @@ export function Gallery() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  className={`video-tile relative aspect-[4/3] overflow-hidden bg-white ${expandClasses}`}
+                  className={`video-tile group relative aspect-[4/3] overflow-hidden bg-white ${expandClasses}`}
                 >
                   <button
                     type="button"
@@ -611,6 +645,7 @@ export function Gallery() {
         {activeVideo &&
           createPortal(
             <div
+              className="video-modal-shell"
               style={
                 {
                   position: "fixed",
@@ -620,39 +655,11 @@ export function Gallery() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  padding: "16px",
                 } as CSSProperties
               }
               role="dialog"
               aria-modal="true"
               aria-label={activeVideo.title}
-              onTouchStart={(e) => {
-                if (!hasVideoNavigation) return;
-                const touch = e.changedTouches[0];
-                videoSwipeStartRef.current = {
-                  x: touch.clientX,
-                  y: touch.clientY,
-                };
-              }}
-              onTouchEnd={(e) => {
-                if (!hasVideoNavigation || !videoSwipeStartRef.current) return;
-                const touch = e.changedTouches[0];
-                const dx = touch.clientX - videoSwipeStartRef.current.x;
-                const dy = touch.clientY - videoSwipeStartRef.current.y;
-                const absDx = Math.abs(dx);
-                const absDy = Math.abs(dy);
-
-                if (
-                  absDx >= VIDEO_SWIPE_THRESHOLD &&
-                  absDx > absDy * VIDEO_SWIPE_DIRECTION_RATIO
-                ) {
-                  suppressBackdropCloseRef.current = true;
-                  if (dx > 0) openPrevVideo();
-                  else openNextVideo();
-                }
-
-                videoSwipeStartRef.current = null;
-              }}
             >
               <button
                 type="button"
@@ -723,6 +730,38 @@ export function Gallery() {
                   } as CSSProperties
                 }
               >
+                {hasVideoNavigation && (
+                  <button
+                    type="button"
+                    className="video-swipe-zone video-swipe-zone-left"
+                    onClick={openPrevVideo}
+                    onTouchStart={(e) => {
+                      const touch = e.changedTouches[0];
+                      handleVideoSwipeStart(touch.clientX, touch.clientY);
+                    }}
+                    onTouchEnd={(e) => {
+                      const touch = e.changedTouches[0];
+                      handleVideoSwipeEnd(touch.clientX, touch.clientY);
+                    }}
+                    aria-label="Previous video"
+                  />
+                )}
+                {hasVideoNavigation && (
+                  <button
+                    type="button"
+                    className="video-swipe-zone video-swipe-zone-right"
+                    onClick={openNextVideo}
+                    onTouchStart={(e) => {
+                      const touch = e.changedTouches[0];
+                      handleVideoSwipeStart(touch.clientX, touch.clientY);
+                    }}
+                    onTouchEnd={(e) => {
+                      const touch = e.changedTouches[0];
+                      handleVideoSwipeEnd(touch.clientX, touch.clientY);
+                    }}
+                    aria-label="Next video"
+                  />
+                )}
                 <iframe
                   src={getYoutubeEmbedUrl(activeVideo.videoId)}
                   title={activeVideo.title}

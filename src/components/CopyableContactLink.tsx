@@ -55,7 +55,13 @@ export function ContactWithCopy({
       .then(() => {
         toast.success(getTranslation(language, "copied"));
       })
-      .catch(() => {});
+      .catch(() => {
+        toast.error(
+          language === "pl"
+            ? "Nie udało się skopiować danych."
+            : "Couldn't copy the contact details."
+        );
+      });
   };
 
   return (

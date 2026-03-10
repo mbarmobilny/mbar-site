@@ -9,11 +9,14 @@ import { Calendar } from "./calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 interface DatePickerProps {
+  id?: string;
   date: Date | undefined;
   setDate: (date: Date | undefined) => void;
   language: string;
   placeholder?: string;
   className?: string;
+  ariaInvalid?: boolean;
+  ariaDescribedBy?: string;
 }
 
 function startOfToday() {
@@ -23,11 +26,14 @@ function startOfToday() {
 }
 
 export function DatePicker({
+  id,
   date,
   setDate,
   language,
   placeholder,
   className,
+  ariaInvalid = false,
+  ariaDescribedBy,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -35,12 +41,16 @@ export function DatePicker({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          type="button"
+          id={id}
           variant={"outline"}
           className={cn(
             "w-full justify-start text-left font-light rounded-none border-x-0 border-t-0 border-b border-primary/20 bg-transparent px-0 py-4 text-primary hover:bg-transparent hover:text-primary shadow-none h-auto text-base",
             !date && "text-primary/40",
             className
           )}
+          aria-invalid={ariaInvalid}
+          aria-describedby={ariaDescribedBy}
         >
           <CalendarIcon className="mr-2 h-4 w-4 opacity-50 hidden" />
           {date ? (

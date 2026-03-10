@@ -1,14 +1,14 @@
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
-import type { NavigateHandler } from "../types/navigation";
+import type { NavigateHandler, Page } from "../types/navigation";
 import logo from "../assets/logo.png";
 import { motion, AnimatePresence } from "motion/react";
 
 interface HeaderProps {
-  currentPage: string;
+  currentPage: Page;
   onNavigate: NavigateHandler;
 }
 
@@ -16,7 +16,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
   const { language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navigation = [
+  const navigation: { name: string; id: Page }[] = [
     { name: getTranslation(language, "home"), id: "home" },
     { name: getTranslation(language, "gallery"), id: "gallery" },
     { name: getTranslation(language, "prices"), id: "prices" },
@@ -26,6 +26,40 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
 
   const toggleLanguage = () => setLanguage(language === "pl" ? "en" : "pl");
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      return undefined;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    const closeMenu = () => setIsMenuOpen(false);
+    window.addEventListener("hashchange", closeMenu);
+    return () => window.removeEventListener("hashchange", closeMenu);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const handleChange = (event: MediaQueryListEvent) => {
+      if (event.matches) setIsMenuOpen(false);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   return (
     <>
       <header className="sticky top-0 z-50 bg-[#faf9f7] border-b border-primary/10">
@@ -33,7 +67,10 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           <div className="flex justify-between items-center h-20 md:h-24">
             <div className="flex-shrink-0 flex items-center">
               <button
-                onClick={() => onNavigate("home")}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onNavigate("home");
+                }}
                 className="flex items-center justify-center hover:opacity-80 transition-opacity"
                 aria-label="mBar Home"
               >

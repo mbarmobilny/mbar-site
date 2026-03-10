@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+    container:
+      image: node:20-bookworm
+
+    steps:
+      - name: Verify runtime and workspace
+        run: |
+          node --version
+          npm --version
+          test -f package.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build

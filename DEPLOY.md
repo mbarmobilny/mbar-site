@@ -2,7 +2,7 @@
 
 ## 1. Підготовка
 
-- [ ] Додай зображення `public/og-image.jpg` (1200×630 px) для соцмереж
+- [x] Зображення для соцмереж є: `public/og-image.png`
 
 Домен налаштовано: **mbar.events** (robots.txt, sitemap.xml, index.html)
 
@@ -10,7 +10,7 @@
 
 1. Зайди на [netlify.com](https://netlify.com) → Sign up / Log in
 2. **Add new site** → **Import an existing project**
-3. Підключи GitHub/GitLab (або завантаж через drag & drop з `dist/`)
+3. Підключи GitHub/GitLab. `Drag & drop` з `dist/` використовуй лише якщо локально вже зібрав сайт з правильними `VITE_*` змінними.
 4. Build settings:
    - **Build command:** `npm run build`
    - **Publish directory:** `dist`
@@ -22,6 +22,7 @@
    - `VITE_FACEBOOK_URL` = посилання на Facebook
    - `VITE_GA_ID` = (опційно) Google Analytics 4 ID, формат `G-XXXXXXXXXX`
 6. **Trigger deploy** після додавання змінних (Deploys → Trigger deploy)
+7. Після першого деплою перевір social preview через [OpenGraph Debugger](https://developers.facebook.com/tools/debug/) або [Twitter Card Validator](https://cards-dev.twitter.com/validator)
 
 ## 3. Домен
 

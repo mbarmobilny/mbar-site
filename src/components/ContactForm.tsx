@@ -44,6 +44,24 @@ function isValidEmail(email: string): boolean {
   return EMAIL_REGEX.test(email.trim());
 }
 
+function formatDateForSubmission(value: Date): string {
+  const year = value.getFullYear();
+  const month = String(value.getMonth() + 1).padStart(2, "0");
+  const day = String(value.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function normalizeFormData(formData: typeof EMPTY_FORM) {
+  return {
+    ...formData,
+    name: formData.name.trim(),
+    email: formData.email.trim(),
+    phone: formData.phone.trim(),
+    location: formData.location.trim(),
+    message: formData.message.trim(),
+  };
+}
+
 export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
   const { language } = useLanguage();
   const [date, setDate] = useState<Date | undefined>();
@@ -53,49 +71,110 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [dateError, setDateError] = useState<string | null>(null);
   const packageRef = useRef<HTMLSelectElement>(null);
+  const scrollTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (selectedPackage) {
-      setFormData((prev) => ({ ...prev, packageChoice: selectedPackage }));
-      setTimeout(() => {
-        packageRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }, 400);
-    }
+    setFormData((prev) =>
+      prev.packageChoice === selectedPackage
+        ? prev
+        : { ...prev, packageChoice: selectedPackage }
+    );
+
+    if (!selectedPackage) return undefined;
+
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      packageRef.current?.focus();
+      packageRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 400);
+
+    return () => {
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = null;
+      }
+    };
   }, [selectedPackage]);
+
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current !== null) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const t = (key: Parameters<typeof getTranslation>[1]) =>
     getTranslation(language, key);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!date) {
+    const normalizedFormData = normalizeFormData(formData);
+    const dateRequiredMessage =
+      language === "pl" ? "proszę wybrać datę" : "please select a date";
+    const invalidEmailMessage =
+      language === "pl"
+        ? "Proszę podać prawidłowy adres e-mail."
+        : "Please enter a valid email address.";
+
+    setFormData((prev) =>
+      prev.name === normalizedFormData.name &&
+      prev.email === normalizedFormData.email &&
+      prev.phone === normalizedFormData.phone &&
+      prev.location === normalizedFormData.location &&
+      prev.message === normalizedFormData.message
+        ? prev
+        : normalizedFormData
+    );
+    setEmailError(null);
+    setDateError(null);
+
+    if (
+      !normalizedFormData.name ||
+      !normalizedFormData.email ||
+      !normalizedFormData.phone ||
+      !normalizedFormData.location
+    ) {
       toast.error(
-        t("eventDate") +
-          " — " +
-          (language === "pl" ? "proszę wybrać datę" : "please select a date")
+        language === "pl"
+          ? "Proszę uzupełnić wszystkie wymagane pola."
+          : "Please fill in all required fields."
       );
       return;
     }
+
+    if (!date) {
+      const message = `${t("eventDate")} — ${dateRequiredMessage}`;
+      setDateError(message);
+      toast.error(message);
+      return;
+    }
+
     const selectedDay = new Date(date);
     selectedDay.setHours(0, 0, 0, 0);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     if (selectedDay.getTime() < today.getTime()) {
+      setDateError(t("datePastError"));
       toast.error(t("datePastError"));
       return;
     }
-    if (!isValidEmail(formData.email)) {
-      toast.error(
+
+    if (!isValidEmail(normalizedFormData.email)) {
+      setEmailError(
         language === "pl"
-          ? "Proszę podać prawidłowy adres e-mail."
-          : "Please enter a valid email address."
+          ? "Nieprawidłowy adres e-mail"
+          : "Invalid email address"
       );
+      toast.error(invalidEmailMessage);
       return;
     }
+
+    const eventDate = formatDateForSubmission(date);
 
     setIsSubmitting(true);
 
@@ -105,39 +184,45 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            eventType: formData.eventType,
-            guestCount: formData.guestCount,
-            location: formData.location,
-            message: formData.message,
-            packageChoice: formData.packageChoice,
-            eventDate: date?.toISOString().split("T")[0],
+            name: normalizedFormData.name,
+            email: normalizedFormData.email,
+            phone: normalizedFormData.phone,
+            eventType: normalizedFormData.eventType,
+            guestCount: normalizedFormData.guestCount,
+            location: normalizedFormData.location,
+            message: normalizedFormData.message,
+            packageChoice: normalizedFormData.packageChoice,
+            eventDate,
           }),
         });
 
         if (!res.ok) throw new Error("Form submission failed");
-      } else {
-        const subject =
+
+        toast.success(
           language === "pl"
-            ? `[mBar] Zapytanie od ${formData.name}`
-            : `[mBar] Inquiry from ${formData.name}`;
-        const body =
-          `${t("name")}: ${formData.name}\n${t("email")}: ${formData.email}\n${t("phone")}: ${formData.phone}\n` +
-          `${t("eventType")}: ${formData.eventType}\n${t("guestCount")}: ${formData.guestCount}\n` +
-          `${t("location")}: ${formData.location}\n${t("packageField")}: ${formData.packageChoice}\n` +
-          `${t("eventDate")}: ${date?.toISOString().split("T")[0]}\n\n${t("message")}:\n${formData.message}`;
-        window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            ? "Dziękujemy! Skontaktujemy się w ciągu 24 godzin."
+            : "Thank you! We'll get back to you within 24 hours."
+        );
+        setFormData(EMPTY_FORM);
+        setDate(undefined);
+        return;
       }
 
+      const subject =
+        language === "pl"
+          ? `[mBar] Zapytanie od ${normalizedFormData.name}`
+          : `[mBar] Inquiry from ${normalizedFormData.name}`;
+      const body =
+        `${t("name")}: ${normalizedFormData.name}\n${t("email")}: ${normalizedFormData.email}\n${t("phone")}: ${normalizedFormData.phone}\n` +
+        `${t("eventType")}: ${normalizedFormData.eventType}\n${t("guestCount")}: ${normalizedFormData.guestCount}\n` +
+        `${t("location")}: ${normalizedFormData.location}\n${t("packageField")}: ${normalizedFormData.packageChoice}\n` +
+        `${t("eventDate")}: ${eventDate}\n\n${t("message")}:\n${normalizedFormData.message}`;
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       toast.success(
         language === "pl"
-          ? "Dziękujemy! Skontaktujemy się w ciągu 24 godzin."
-          : "Thank you! We'll get back to you within 24 hours."
+          ? "Otwieramy aplikację pocztową z gotową wiadomością."
+          : "Opening your email app with a pre-filled message."
       );
-      setFormData(EMPTY_FORM);
-      setDate(undefined);
     } catch (err) {
       console.error("Contact form submission failed:", err);
       toast.error(
@@ -153,6 +238,11 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (field === "email") setEmailError(null);
+  };
+
+  const handleDateChange = (nextDate: Date | undefined) => {
+    setDate(nextDate);
+    setDateError(null);
   };
 
   const handleEmailBlur = () => {
@@ -317,6 +407,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     onChange={(e) => handleChange("name", e.target.value)}
                     placeholder={t("namePlaceholder")}
                     required
+                    autoComplete="name"
                     className={inputCls}
                   />
                 </div>
@@ -332,6 +423,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     onBlur={handleEmailBlur}
                     placeholder={t("emailPlaceholder")}
                     required
+                    autoComplete="email"
                     className={`${inputCls} ${emailError ? "!border-destructive" : ""}`}
                     aria-invalid={!!emailError}
                     aria-describedby={emailError ? "email-error" : undefined}
@@ -360,6 +452,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     onChange={(e) => handleChange("phone", e.target.value)}
                     placeholder={t("phonePlaceholder")}
                     required
+                    autoComplete="tel"
                     className={inputCls}
                   />
                 </div>
@@ -368,13 +461,25 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     {t("eventDate")} *
                   </label>
                   <DatePicker
+                    id="eventDate"
                     date={date}
-                    setDate={setDate}
+                    setDate={handleDateChange}
                     language={language}
                     placeholder={
                       language === "pl" ? "DD.MM.RRRR" : "DD.MM.YYYY"
                     }
+                    ariaInvalid={!!dateError}
+                    ariaDescribedBy={dateError ? "eventDate-error" : undefined}
                   />
+                  {dateError && (
+                    <p
+                      id="eventDate-error"
+                      className="text-sm text-destructive"
+                      role="alert"
+                    >
+                      {dateError}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -389,6 +494,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
                     onChange={(e) => handleChange("location", e.target.value)}
                     placeholder={t("locationPlaceholder")}
                     required
+                    autoComplete="street-address"
                     className={inputCls}
                   />
                 </div>

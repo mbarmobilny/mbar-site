@@ -8,6 +8,8 @@ import { CallToAction } from "./components/CallToAction";
 import { Footer } from "./components/Footer";
 import { IceCubeSpinner } from "./components/IceCubeSpinner";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { useLanguage } from "./context/LanguageContext";
+import type { Page } from "./types/navigation";
 
 const Gallery = lazy(() =>
   import("./components/Gallery").then((m) => ({ default: m.Gallery }))
@@ -22,18 +24,98 @@ const ContactForm = lazy(() =>
   import("./components/ContactForm").then((m) => ({ default: m.ContactForm }))
 );
 
+const VALID_PAGES: Page[] = ["home", "gallery", "prices", "about", "contact"];
+
+function getPageFromHash(hash: string): Page {
+  const normalized = hash.replace(/^#/, "");
+  return VALID_PAGES.includes(normalized as Page)
+    ? (normalized as Page)
+    : "home";
+}
+
+function setMetaContent(selector: string, content: string) {
+  document
+    .querySelector<HTMLMetaElement>(selector)
+    ?.setAttribute("content", content);
+}
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const { language } = useLanguage();
+  const [currentPage, setCurrentPage] = useState<Page>(() =>
+    typeof window === "undefined"
+      ? "home"
+      : getPageFromHash(window.location.hash)
+  );
   const [selectedPackage, setSelectedPackage] = useState<string>("");
 
-  const handleNavigate = (page: string, pkg?: string) => {
+  const handleNavigate = (page: Page, pkg?: string) => {
+    setSelectedPackage(pkg ?? "");
     setCurrentPage(page);
-    if (pkg !== undefined) setSelectedPackage(pkg);
+
+    if (typeof window !== "undefined" && window.location.hash !== `#${page}`) {
+      window.location.hash = page;
+    }
   };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const syncPageFromHash = () => {
+      setCurrentPage(getPageFromHash(window.location.hash));
+    };
+
+    syncPageFromHash();
+    window.addEventListener("hashchange", syncPageFromHash);
+    return () => window.removeEventListener("hashchange", syncPageFromHash);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
+
+  useEffect(() => {
+    const pageLabel =
+      currentPage === "home"
+        ? language === "pl"
+          ? "Strona główna"
+          : "Home"
+        : currentPage === "gallery"
+          ? language === "pl"
+            ? "Galeria"
+            : "Gallery"
+          : currentPage === "prices"
+            ? language === "pl"
+              ? "Pakiety"
+              : "Packages"
+            : currentPage === "about"
+              ? language === "pl"
+                ? "O nas"
+                : "About"
+              : language === "pl"
+                ? "Kontakt"
+                : "Contact";
+
+    const description =
+      language === "pl"
+        ? "mBar — premium mobilny bar na wesela, eventy firmowe i prywatne przyjęcia."
+        : "mBar — premium mobile bar service for weddings, corporate events and private celebrations.";
+
+    const title =
+      currentPage === "home"
+        ? "mBar — Premium Mobilny Bar"
+        : `mBar — ${pageLabel}`;
+
+    document.title = title;
+    setMetaContent('meta[name="description"]', description);
+    setMetaContent('meta[property="og:title"]', title);
+    setMetaContent('meta[property="og:description"]', description);
+    setMetaContent(
+      'meta[property="og:locale"]',
+      language === "pl" ? "pl_PL" : "en_US"
+    );
+    setMetaContent('meta[name="twitter:title"]', title);
+    setMetaContent('meta[name="twitter:description"]', description);
+  }, [currentPage, language]);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -42,8 +124,8 @@ export default function App() {
   };
 
   const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
+    type: "tween" as const,
+    ease: "anticipate" as const,
     duration: 0.5,
   };
 
