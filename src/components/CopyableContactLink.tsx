@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 import { Copy } from "lucide-react";
 import { toast } from "sonner";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
 
 const DESKTOP_MIN_WIDTH = 768;
+const MEDIA_QUERY = `(min-width: ${DESKTOP_MIN_WIDTH}px)`;
 
 function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(() =>
-    typeof window !== "undefined"
-      ? window.innerWidth >= DESKTOP_MIN_WIDTH
-      : false
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mq = window.matchMedia(MEDIA_QUERY);
+      mq.addEventListener("change", onStoreChange);
+      return () => mq.removeEventListener("change", onStoreChange);
+    },
+    () =>
+      typeof window !== "undefined"
+        ? window.matchMedia(MEDIA_QUERY).matches
+        : false,
+    () => false
   );
-  useEffect(() => {
-    const mq = window.matchMedia(`(min-width: ${DESKTOP_MIN_WIDTH}px)`);
-    setIsDesktop(mq.matches);
-    const handler = () => setIsDesktop(mq.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-  return isDesktop;
 }
 
 interface ContactWithCopyProps {

@@ -3909,6 +3909,13 @@ select:focus-visible {
   }
 }
 
+/* SimpleLightbox - prevent background scroll when open */
+html.has-lightbox,
+html.has-lightbox body {
+  overflow: hidden !important;
+  height: 100%;
+}
+
 /* SimpleLightbox - dark overlay, light controls */
 .sl-overlay {
   background: rgba(0, 0, 0, 0.9) !important;
@@ -4040,4 +4047,75 @@ select:focus-visible {
 .contact-copy-btn:hover {
   opacity: 1;
   transform: scale(1.15);
+}
+
+/* Gallery grid — expand last-row items to fill empty cells */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .gallery-item-expand-md {
+    grid-row: span 2 !important;
+    aspect-ratio: auto !important;
+  }
+}
+@media (min-width: 1024px) {
+  .gallery-item-expand-lg {
+    grid-row: span 2 !important;
+    aspect-ratio: auto !important;
+  }
+}
+
+/* Gallery video tile — reliable hover effects */
+.video-thumb {
+  transform: scale(1);
+  transition: transform 420ms ease-out;
+}
+
+.video-overlay {
+  transition:
+    opacity 220ms ease,
+    filter 300ms ease;
+}
+
+.video-play {
+  transform: scale(1);
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.video-tile:hover .video-thumb {
+  transform: scale(1.07);
+}
+
+.video-tile:hover .video-overlay {
+  filter: brightness(0.85) contrast(1.05);
+}
+
+.video-tile:hover .video-play {
+  transform: scale(1.2);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Gallery lightbox — cocktail caption */
+.sl-wrapper .sl-image .sl-caption.gallery-lightbox-caption,
+.sl-caption.gallery-lightbox-caption,
+.gallery-lightbox-caption {
+  background: rgba(26, 74, 63, 0.94) !important;
+  border-top: 2px solid var(--secondary);
+  white-space: pre-line;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-sans);
+  color: rgba(250, 249, 247, 0.95);
+}
+.sl-caption.gallery-lightbox-caption::first-line,
+.gallery-lightbox-caption::first-line {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--secondary);
 }

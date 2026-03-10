@@ -18,12 +18,16 @@ declare module "*.webp" {
 declare module "simplelightbox" {
   interface SimpleLightboxOptions {
     overlayOpacity?: number;
+    captionSelector?: string;
     captionsData?: string;
     captionPosition?: string;
     captionDelay?: number;
+    captionClass?: string;
     animationSpeed?: number;
     widthRatio?: number;
     heightRatio?: number;
+    disableScroll?: boolean;
+    scrollZoom?: boolean;
   }
 
   export default class SimpleLightbox {

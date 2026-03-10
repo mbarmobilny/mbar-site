@@ -112,7 +112,33 @@ export const translations = {
     galleryCocktails: "Koktajle",
     galleryBarSetup: "Bar",
     galleryEvents: "Wydarzenia",
+    galleryPhotos: "Zdjęcia",
+    galleryVideo: "Wideo",
+    galleryPlayVideo: "Odtwórz wideo",
+    galleryShorts: "Shorts",
     galleryService: "Serwis",
+    cocktailAviationCaption:
+      "AVIATION\nAksamitny · Kwiatowy · Klarowny\n—\nGin / Maraschino / Creme de Violette / Cytrusy / Milk punch",
+    cocktailSiestaCaption:
+      "SIESTA\nGorzko-cytrusowy · Orzeźwiający · Wyrazisty\n—\nTequila / Campari / Grejpfrut / Cytrusy",
+    cocktailYenneferCaption:
+      "YENNEFER\nLekki · Botaniczny · Świeży\n—\nGin / Likier z kwiatu bzu / Jabłko / Cytrusy",
+    cocktailCloverClubCaption:
+      "CLOVER CLUB\nMalinowy · Aksamitny · Zbalansowany\n—\nGin / Wytrawny wermut / Malina / Cytrusy",
+    cocktailGringoCaption:
+      "GRINGO\nOwocowy · Elegancki · Harmonijny\n—\nWódka malinowa / Bianco wermut / Wanilia / Kokos / Jabłko / Ziołowy bitter",
+    cocktailNegroniCaption:
+      "NEGRONI\nKlasyczny · Gorzko-ziołowy · Mocny\n—\nGin / Cynar / Słodki wermut",
+    cocktailPornStarCaption:
+      "PORN STAR MARTINI\nTropikalny · Soczysty · Orzeźwiający\n—\nWódka / Marakuja / Wanilia / Cytrusy / Prosecco",
+    cocktailVermouthCaption:
+      "VERMOUTH COCKTAIL\nTropikalny · Owocowy · Subtelny\n—\nWódka aromatyzowana owocami / Białe hiszpańskie wino / Banan",
+    cocktailWhiskeySourCaption:
+      "WHISKEY SOUR\nKlasyczny · Cytrusowy · Zbalansowany\n—\nWhiskey / Cytrusy / Angostura / Pianka",
+    cocktailAperolCaption:
+      "APEROL SPRITZ\nLekki · Słoneczny · Bąbelkowy\n—\nAperol / Prosecco / Woda gazowana",
+    cocktailGinTonicCaption:
+      "GIN & TONIC\nAutorski · Aromatyczny · Świeży\n—\nGin aromatyzowany owocami / Ręcznie robiony tonic",
 
     // Prices
     pricesLabel: "Nasze pakiety",
@@ -331,7 +357,33 @@ export const translations = {
     galleryCocktails: "Cocktails",
     galleryBarSetup: "Bar Setup",
     galleryEvents: "Events",
+    galleryPhotos: "Photos",
+    galleryVideo: "Videos",
+    galleryPlayVideo: "Play video",
+    galleryShorts: "Shorts",
     galleryService: "Service",
+    cocktailAviationCaption:
+      "AVIATION\nVelvety · Floral · Clear\n—\nGin / Maraschino / Crème de Violette / Citrus / Milk punch",
+    cocktailSiestaCaption:
+      "SIESTA\nBitter-citrus · Refreshing · Bold\n—\nTequila / Campari / Grapefruit / Citrus",
+    cocktailYenneferCaption:
+      "YENNEFER\nLight · Botanical · Fresh\n—\nGin / Elderflower liqueur / Apple / Citrus",
+    cocktailCloverClubCaption:
+      "CLOVER CLUB\nRaspberry · Velvety · Balanced\n—\nGin / Dry vermouth / Raspberry / Citrus",
+    cocktailGringoCaption:
+      "GRINGO\nFruity · Elegant · Harmonious\n—\nRaspberry vodka / Bianco vermouth / Vanilla / Coconut / Apple / Herbal bitter",
+    cocktailNegroniCaption:
+      "NEGRONI\nClassic · Bitter-herbal · Strong\n—\nGin / Cynar / Sweet vermouth",
+    cocktailPornStarCaption:
+      "PORN STAR MARTINI\nTropical · Juicy · Refreshing\n—\nVodka / Passion fruit / Vanilla / Citrus / Prosecco",
+    cocktailVermouthCaption:
+      "VERMOUTH COCKTAIL\nTropical · Fruity · Subtle\n—\nFruit-infused vodka / White Spanish wine / Banana",
+    cocktailWhiskeySourCaption:
+      "WHISKEY SOUR\nClassic · Citrusy · Balanced\n—\nWhiskey / Citrus / Angostura / Foam",
+    cocktailAperolCaption:
+      "APEROL SPRITZ\nLight · Sunny · Bubbly\n—\nAperol / Prosecco / Soda water",
+    cocktailGinTonicCaption:
+      "GIN & TONIC\nSignature · Aromatic · Fresh\n—\nFruit-infused gin / Handcrafted tonic",
 
     // Prices
     pricesLabel: "Our packages",
