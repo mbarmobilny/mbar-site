@@ -13,21 +13,29 @@ jobs:
       image: node:20-bookworm
 
     steps:
-      - name: Install git
+      - name: Install download tools
         run: |
           apt-get update
-          apt-get install -y git ca-certificates
+          apt-get install -y curl ca-certificates tar
 
-      - name: Checkout repository
+      - name: Download repository snapshot
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
+          RUNNER_TEMP: ${{ runner.temp }}
         run: |
-          git init .
-          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git fetch --depth=1 origin "${GITHUB_SHA}"
-          git checkout --detach FETCH_HEAD
+          ARCHIVE_PATH="${RUNNER_TEMP}/repo.tar.gz"
+          EXTRACT_DIR="${RUNNER_TEMP}/repo-src"
+          rm -rf "${EXTRACT_DIR}"
+          mkdir -p "${EXTRACT_DIR}"
+          curl -fsSL \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/tarball/${GITHUB_SHA}" \
+            -o "${ARCHIVE_PATH}"
+          tar -xzf "${ARCHIVE_PATH}" -C "${EXTRACT_DIR}" --strip-components=1
+          cp -R "${EXTRACT_DIR}/." .
 
       - name: Verify runtime and workspace
         run: |
