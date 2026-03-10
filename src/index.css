@@ -4095,6 +4095,21 @@ html.has-lightbox body {
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
 }
 
+/* Video modal close button — match lightbox style */
+.video-close-btn {
+  right: 30px;
+  top: 30px;
+  z-index: 10001;
+  font-size: 3rem;
+}
+@media (max-width: 767px) {
+  .video-close-btn {
+    top: 10px;
+    right: 16px;
+    font-size: 2.6rem;
+  }
+}
+
 /* Gallery lightbox — cocktail caption */
 .sl-wrapper .sl-image .sl-caption.gallery-lightbox-caption,
 .sl-caption.gallery-lightbox-caption,

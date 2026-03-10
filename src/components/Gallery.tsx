@@ -1,6 +1,13 @@
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { motion } from "motion/react";
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { getTranslation, type TranslationKey } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
 import { Container } from "./Container";
@@ -36,6 +43,8 @@ const VIDEO_MODAL_MAX_WIDTH = 460;
 const VIDEO_MODAL_MIN_WIDTH = 320;
 const VIDEO_MODAL_VIEWPORT_WIDTH_RATIO = 0.92;
 const VIDEO_MODAL_VIEWPORT_HEIGHT_RATIO = 0.9;
+const VIDEO_SWIPE_THRESHOLD = 50;
+const VIDEO_SWIPE_DIRECTION_RATIO = 1.4;
 
 // Cocktails
 import imgCocktailsAviation from "../assets/gallery-cocktails-aviation.webp";
@@ -285,6 +294,8 @@ export function Gallery() {
       ? VIDEO_MODAL_MIN_WIDTH
       : getVideoModalWidth(window.innerWidth, window.innerHeight)
   );
+  const videoSwipeStartRef = useRef<{ x: number; y: number } | null>(null);
+  const suppressBackdropCloseRef = useRef(false);
   const lightboxRef = useRef<SimpleLightbox | null>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
@@ -295,7 +306,12 @@ export function Gallery() {
         name: getTranslation(language, "galleryPhotos"),
       },
       ...(galleryVideos.length > 0
-        ? [{ id: "video" as const, name: getTranslation(language, "galleryVideo") }]
+        ? [
+            {
+              id: "video" as const,
+              name: getTranslation(language, "galleryVideo"),
+            },
+          ]
         : []),
     ],
     [language]
@@ -323,7 +339,9 @@ export function Gallery() {
   const filteredImages = useMemo(() => {
     if (selectedMediaFilter !== "photos") return [];
     if (selectedPhotoFilter === "all") return galleryImages;
-    return galleryImages.filter((image) => image.category === selectedPhotoFilter);
+    return galleryImages.filter(
+      (image) => image.category === selectedPhotoFilter
+    );
   }, [selectedMediaFilter, selectedPhotoFilter]);
 
   const filteredVideos = useMemo(() => {
@@ -344,16 +362,29 @@ export function Gallery() {
   const activeVideo = useMemo(
     () =>
       videoOpenId
-        ? galleryVideos.find((video) => video.videoId === videoOpenId) ?? null
+        ? (galleryVideos.find((video) => video.videoId === videoOpenId) ?? null)
         : null,
     [videoOpenId]
   );
   const activeVideoIndex = useMemo(
     () =>
-      activeVideo ? filteredVideos.findIndex((v) => v.videoId === activeVideo.videoId) : -1,
+      activeVideo
+        ? filteredVideos.findIndex((v) => v.videoId === activeVideo.videoId)
+        : -1,
     [activeVideo, filteredVideos]
   );
   const hasVideoNavigation = filteredVideos.length > 1;
+  const openPrevVideo = useCallback(() => {
+    if (!hasVideoNavigation || activeVideoIndex < 0) return;
+    const prevIndex =
+      (activeVideoIndex - 1 + filteredVideos.length) % filteredVideos.length;
+    setVideoOpenId(filteredVideos[prevIndex].videoId);
+  }, [activeVideoIndex, filteredVideos, hasVideoNavigation]);
+  const openNextVideo = useCallback(() => {
+    if (!hasVideoNavigation || activeVideoIndex < 0) return;
+    const nextIndex = (activeVideoIndex + 1) % filteredVideos.length;
+    setVideoOpenId(filteredVideos[nextIndex].videoId);
+  }, [activeVideoIndex, filteredVideos, hasVideoNavigation]);
 
   const expandLg = useMemo(
     () => getExpandRowIndices(filteredItems.length, 3),
@@ -377,16 +408,11 @@ export function Gallery() {
         setVideoOpenId(null);
         return;
       }
-      if (!hasVideoNavigation || activeVideoIndex < 0) return;
-
       if (e.key === "ArrowLeft") {
-        const prevIndex =
-          (activeVideoIndex - 1 + filteredVideos.length) % filteredVideos.length;
-        setVideoOpenId(filteredVideos[prevIndex].videoId);
+        openPrevVideo();
       }
       if (e.key === "ArrowRight") {
-        const nextIndex = (activeVideoIndex + 1) % filteredVideos.length;
-        setVideoOpenId(filteredVideos[nextIndex].videoId);
+        openNextVideo();
       }
     };
 
@@ -396,7 +422,7 @@ export function Gallery() {
       document.documentElement.style.overflow = prevHtmlOverflow;
       document.removeEventListener("keydown", onEscape);
     };
-  }, [activeVideo, activeVideoIndex, filteredVideos, hasVideoNavigation]);
+  }, [activeVideo, openNextVideo, openPrevVideo]);
 
   useEffect(() => {
     if (!activeVideo) return;
@@ -600,25 +626,60 @@ export function Gallery() {
               role="dialog"
               aria-modal="true"
               aria-label={activeVideo.title}
+              onTouchStart={(e) => {
+                if (!hasVideoNavigation) return;
+                const touch = e.changedTouches[0];
+                videoSwipeStartRef.current = {
+                  x: touch.clientX,
+                  y: touch.clientY,
+                };
+              }}
+              onTouchEnd={(e) => {
+                if (!hasVideoNavigation || !videoSwipeStartRef.current) return;
+                const touch = e.changedTouches[0];
+                const dx = touch.clientX - videoSwipeStartRef.current.x;
+                const dy = touch.clientY - videoSwipeStartRef.current.y;
+                const absDx = Math.abs(dx);
+                const absDy = Math.abs(dy);
+
+                if (
+                  absDx >= VIDEO_SWIPE_THRESHOLD &&
+                  absDx > absDy * VIDEO_SWIPE_DIRECTION_RATIO
+                ) {
+                  suppressBackdropCloseRef.current = true;
+                  if (dx > 0) openPrevVideo();
+                  else openNextVideo();
+                }
+
+                videoSwipeStartRef.current = null;
+              }}
             >
               <button
                 type="button"
-                onClick={() => setVideoOpenId(null)}
+                onClick={() => {
+                  if (suppressBackdropCloseRef.current) {
+                    suppressBackdropCloseRef.current = false;
+                    return;
+                  }
+                  setVideoOpenId(null);
+                }}
                 className="absolute inset-0"
                 aria-label="Close video"
               />
               {hasVideoNavigation && (
                 <button
                   type="button"
-                  onClick={() => {
-                    if (activeVideoIndex < 0) return;
-                    const prevIndex =
-                      (activeVideoIndex - 1 + filteredVideos.length) %
-                      filteredVideos.length;
-                    setVideoOpenId(filteredVideos[prevIndex].videoId);
-                  }}
+                  onClick={openPrevVideo}
                   className="fixed h-11 w-11 text-white leading-[1] hover:opacity-80 transition-opacity"
-                  style={{ left: 20, top: "50%", transform: "translateY(-50%)", zIndex: 10001, fontSize: 48 } as CSSProperties}
+                  style={
+                    {
+                      left: 20,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      zIndex: 10001,
+                      fontSize: 48,
+                    } as CSSProperties
+                  }
                   aria-label="Previous video"
                 >
                   &lsaquo;
@@ -627,13 +688,17 @@ export function Gallery() {
               {hasVideoNavigation && (
                 <button
                   type="button"
-                  onClick={() => {
-                    if (activeVideoIndex < 0) return;
-                    const nextIndex = (activeVideoIndex + 1) % filteredVideos.length;
-                    setVideoOpenId(filteredVideos[nextIndex].videoId);
-                  }}
+                  onClick={openNextVideo}
                   className="fixed h-11 w-11 text-white leading-[1] hover:opacity-80 transition-opacity"
-                  style={{ right: 20, top: "50%", transform: "translateY(-50%)", zIndex: 10001, fontSize: 48 } as CSSProperties}
+                  style={
+                    {
+                      right: 20,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      zIndex: 10001,
+                      fontSize: 48,
+                    } as CSSProperties
+                  }
                   aria-label="Next video"
                 >
                   &rsaquo;
@@ -642,8 +707,7 @@ export function Gallery() {
               <button
                 type="button"
                 onClick={() => setVideoOpenId(null)}
-                className="fixed h-11 w-11 text-white leading-[1] hover:opacity-80 transition-opacity"
-                style={{ right: 30, top: 30, zIndex: 10001, fontSize: 48 } as CSSProperties}
+                className="fixed video-close-btn h-11 w-11 text-white leading-[1] hover:opacity-80 transition-opacity"
                 aria-label="Close video"
               >
                 &times;
