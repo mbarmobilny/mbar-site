@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, type ComponentType } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Toaster } from "./components/ui/sonner";
 import { Header } from "./components/Header";
@@ -11,17 +11,66 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { useLanguage } from "./context/LanguageContext";
 import type { Page } from "./types/navigation";
 
-const Gallery = lazy(() =>
-  import("./components/Gallery").then((m) => ({ default: m.Gallery }))
+type LazyModule<T extends ComponentType<object>> = {
+  default: T;
+};
+
+function isDynamicImportError(error: unknown): error is Error {
+  return (
+    error instanceof Error &&
+    /Failed to fetch dynamically imported module|Importing a module script failed|Loading chunk [\w-]+ failed/i.test(
+      error.message
+    )
+  );
+}
+
+function lazyWithRetry<T extends ComponentType<object>>(
+  importer: () => Promise<LazyModule<T>>,
+  retryKey: string
+) {
+  return lazy(async () => {
+    try {
+      const module = await importer();
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem(retryKey);
+      }
+      return module;
+    } catch (error) {
+      if (
+        typeof window !== "undefined" &&
+        isDynamicImportError(error) &&
+        window.sessionStorage.getItem(retryKey) !== "1"
+      ) {
+        window.sessionStorage.setItem(retryKey, "1");
+        window.location.reload();
+        return new Promise<LazyModule<T>>(() => {});
+      }
+
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem(retryKey);
+      }
+      throw error;
+    }
+  });
+}
+
+const Gallery = lazyWithRetry(
+  () => import("./components/Gallery").then((m) => ({ default: m.Gallery })),
+  "mbar-lazy-retry:gallery"
 );
-const PriceList = lazy(() =>
-  import("./components/PriceList").then((m) => ({ default: m.PriceList }))
+const PriceList = lazyWithRetry(
+  () =>
+    import("./components/PriceList").then((m) => ({ default: m.PriceList })),
+  "mbar-lazy-retry:pricelist"
 );
-const About = lazy(() =>
-  import("./components/About").then((m) => ({ default: m.About }))
+const About = lazyWithRetry(
+  () => import("./components/About").then((m) => ({ default: m.About })),
+  "mbar-lazy-retry:about"
 );
-const ContactForm = lazy(() =>
-  import("./components/ContactForm").then((m) => ({ default: m.ContactForm }))
+const ContactForm = lazyWithRetry(
+  () =>
+    import("./components/ContactForm").then((m) => ({ default: m.ContactForm })),
+  "mbar-lazy-retry:contact"
 );
 
 const VALID_PAGES: Page[] = ["home", "gallery", "prices", "about", "contact"];

@@ -731,10 +731,8 @@ export function Gallery() {
                 }
               >
                 {hasVideoNavigation && (
-                  <button
-                    type="button"
+                  <div
                     className="video-swipe-zone video-swipe-zone-left"
-                    onClick={openPrevVideo}
                     onTouchStart={(e) => {
                       const touch = e.changedTouches[0];
                       handleVideoSwipeStart(touch.clientX, touch.clientY);
@@ -743,14 +741,12 @@ export function Gallery() {
                       const touch = e.changedTouches[0];
                       handleVideoSwipeEnd(touch.clientX, touch.clientY);
                     }}
-                    aria-label="Previous video"
+                    aria-hidden="true"
                   />
                 )}
                 {hasVideoNavigation && (
-                  <button
-                    type="button"
+                  <div
                     className="video-swipe-zone video-swipe-zone-right"
-                    onClick={openNextVideo}
                     onTouchStart={(e) => {
                       const touch = e.changedTouches[0];
                       handleVideoSwipeStart(touch.clientX, touch.clientY);
@@ -759,7 +755,7 @@ export function Gallery() {
                       const touch = e.changedTouches[0];
                       handleVideoSwipeEnd(touch.clientX, touch.clientY);
                     }}
-                    aria-label="Next video"
+                    aria-hidden="true"
                   />
                 )}
                 <iframe

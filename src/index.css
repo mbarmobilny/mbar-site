@@ -4125,11 +4125,14 @@ html.has-lightbox body {
 
   .video-swipe-zone {
     position: absolute;
-    inset-block: 0;
+    top: 50%;
     z-index: 10002;
     display: block;
-    width: 18%;
+    width: 68px;
+    height: clamp(120px, 32%, 220px);
     background: transparent;
+    transform: translateY(-50%);
+    touch-action: pan-y;
   }
 
   .video-swipe-zone-left {

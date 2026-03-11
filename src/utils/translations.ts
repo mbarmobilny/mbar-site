@@ -233,6 +233,9 @@ export const translations = {
 
     // Error boundary
     errorTitle: "Coś poszło nie tak",
+    errorMessage: "Nie udało się poprawnie załadować strony. Odśwież i spróbuj ponownie.",
+    errorUpdatedMessage:
+      "Strona została zaktualizowana. Odśwież, aby wczytać najnowszą wersję.",
     errorReload: "Odśwież",
     copied: "Skopiowano",
     copy: "Skopiuj",
@@ -336,6 +339,10 @@ export const translations = {
 
     // Error boundary
     errorTitle: "Something went wrong",
+    errorMessage:
+      "The page couldn't be loaded correctly. Please refresh and try again.",
+    errorUpdatedMessage:
+      "A newer version of the site is available. Refresh to load the latest version.",
     errorReload: "Reload",
     copied: "Copied",
     copy: "Copy",
