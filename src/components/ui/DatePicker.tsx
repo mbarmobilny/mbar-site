@@ -25,6 +25,10 @@ function startOfToday() {
   return d;
 }
 
+function startOfMonth(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
 export function DatePicker({
   id,
   date,
@@ -36,6 +40,12 @@ export function DatePicker({
   ariaDescribedBy,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false);
+  const today = React.useMemo(() => startOfToday(), []);
+  const firstAvailableMonth = React.useMemo(() => startOfMonth(today), [today]);
+  const lastAvailableMonth = React.useMemo(
+    () => new Date(today.getFullYear() + 5, 11, 1),
+    [today]
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -64,7 +74,7 @@ export function DatePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-auto p-0 rounded-none border border-secondary/20 bg-primary"
+        className="w-[22rem] max-w-[calc(100vw-2rem)] p-0 rounded-none border border-secondary/20 bg-primary"
         align="start"
       >
         <Calendar
@@ -74,30 +84,46 @@ export function DatePicker({
             setDate(newDate);
             setOpen(false);
           }}
-          disabled={{ before: startOfToday() }}
+          disabled={{ before: today }}
+          fromMonth={firstAvailableMonth}
+          toMonth={lastAvailableMonth}
+          captionLayout="dropdown"
+          fixedWeeks
           initialFocus
           locale={language === "pl" ? pl : enUS}
-          className="p-3 bg-primary text-secondary"
+          className="w-full bg-primary text-secondary"
           classNames={{
+            months: "w-full",
             day_selected:
               "!bg-secondary !text-primary hover:!bg-secondary hover:!text-primary focus:!bg-secondary focus:!text-primary rounded-none opacity-100 font-medium",
             day_today:
               "bg-secondary/25 text-secondary rounded-none font-bold opacity-100 border border-secondary/50",
             day: "h-9 w-9 p-0 font-normal rounded-none transition-all duration-300 text-secondary hover:text-secondary hover:bg-secondary/10 aria-selected:opacity-100",
             day_outside:
-              "text-secondary/50 aria-selected:!bg-secondary aria-selected:!text-primary",
+              "invisible pointer-events-none aria-selected:!bg-secondary aria-selected:!text-primary",
             day_disabled:
               "text-secondary/40 opacity-60 cursor-not-allowed pointer-events-none",
-            head_row: "flex w-full gap-1",
+            month: "w-full space-y-4",
+            caption:
+              "flex items-center justify-center w-full pb-3 mb-1",
+            caption_label:
+              "mbar-calendar-caption-label pointer-events-none relative z-[1] inline-flex h-12 w-full items-center justify-between rounded-none border border-secondary/25 bg-primary px-4 font-serif text-[1.05rem] tracking-wide text-secondary",
+            caption_dropdowns:
+              "grid w-full grid-cols-[minmax(0,1fr)_minmax(0,6.5rem)] gap-3",
+            dropdown:
+              "mbar-calendar-dropdown absolute inset-0 z-[2] m-0 h-full w-full cursor-pointer appearance-none opacity-0",
+            dropdown_month: "relative inline-flex w-full items-center",
+            dropdown_year: "relative inline-flex w-full items-center",
+            dropdown_icon: "text-secondary/70",
+            vhidden: "sr-only",
+            head_row:
+              "flex w-full gap-1 border-b border-secondary/20 pb-2 mb-1",
             head_cell:
               "text-secondary rounded-none w-9 min-w-[2.25rem] font-medium text-[0.8rem] uppercase tracking-widest opacity-100 px-1",
             cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-transparent first:[&:has([aria-selected])]:rounded-l-none last:[&:has([aria-selected])]:rounded-r-none focus-within:relative focus-within:z-20",
             nav_button:
               "border border-secondary/20 hover:bg-secondary/10 text-secondary rounded-none opacity-100 transition-colors",
-            caption:
-              "flex justify-center pt-1 relative items-center w-full text-secondary font-serif text-lg mb-2 tracking-wide",
-            table: "w-full border-collapse space-y-1",
-            month: "space-y-4",
+            table: "w-full border-collapse space-y-1 table-fixed",
             row: "flex w-full mt-2 justify-between",
           }}
         />
