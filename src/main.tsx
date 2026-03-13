@@ -4,8 +4,8 @@ import { LanguageProvider } from "./context/LanguageContext";
 import App from "./App.tsx";
 import "./index.css";
 
-// Google Analytics 4 (optional — set VITE_GA_ID in .env)
-const gaId = import.meta.env.VITE_GA_ID;
+// Google Analytics 4
+const gaId = import.meta.env.VITE_GA_ID || "G-FJ7CQQN5BQ";
 if (gaId) {
   const s = document.createElement("script");
   s.async = true;
