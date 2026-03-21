@@ -88,6 +88,10 @@ function setMetaContent(selector: string, content: string) {
     ?.setAttribute("content", content);
 }
 
+function setMetaById(id: string, content: string) {
+  document.getElementById(id)?.setAttribute("content", content);
+}
+
 export default function App() {
   const { language } = useLanguage();
   const [currentPage, setCurrentPage] = useState<Page>(() =>
@@ -146,12 +150,14 @@ export default function App() {
 
     const description =
       language === "pl"
-        ? "mBar — premium mobilny bar na wesela, eventy firmowe i prywatne przyjęcia."
-        : "mBar — premium mobile bar service for weddings, corporate events and private celebrations.";
+        ? "mBar — mobilny bar na wesela i eventy. Mobilne bary z dojazdem: baza Leszno (Wielkopolskie), do 100 km. Serwis barowy premium."
+        : "mBar — mobile bar for weddings & events. Based in Leszno, Greater Poland — service within 100 km. Premium bar catering & mobile bars.";
 
     const title =
       currentPage === "home"
-        ? "mBar — Premium Mobilny Bar"
+        ? language === "pl"
+          ? "mBar — Premium mobilny bar na wesela i eventy | Leszno"
+          : "mBar — Premium mobile bar for weddings & events | Leszno, PL"
         : `mBar — ${pageLabel}`;
 
     document.title = title;
@@ -161,6 +167,10 @@ export default function App() {
     setMetaContent(
       'meta[property="og:locale"]',
       language === "pl" ? "pl_PL" : "en_US"
+    );
+    setMetaById(
+      "meta-og-locale-alternate",
+      language === "pl" ? "en_US" : "pl_PL"
     );
     setMetaContent('meta[name="twitter:title"]', title);
     setMetaContent('meta[name="twitter:description"]', description);

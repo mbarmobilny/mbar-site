@@ -1,0 +1,17 @@
+{
+  "name": "mBar — Premium mobilny bar Leszno",
+  "short_name": "mBar",
+  "description": "Premium mobilny bar — wesela, eventy firmowe, prywatne imprezy. Leszno i okolice.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10472b",
+  "theme_color": "#10472b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

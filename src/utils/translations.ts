@@ -184,7 +184,7 @@ export const translations = {
     contactDetails: "Dane Kontaktowe",
     area: "Obszar",
     response: "Odpowiedź",
-    serviceArea: "Promień 100 km od Leszno",
+    serviceArea: "Promień 100 km od miasta Leszno",
     responseTime: "W ciągu 24 godzin",
     whyUs: "Dlaczego My?",
     customMenuShort: "Spersonalizowane menu",

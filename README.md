@@ -32,6 +32,10 @@ VITE_GA_ID=G-XXXXXXXXXX
 
 - **Netlify**: `npm run build` → publish `dist/` (див. DEPLOY.md)
 
+## SEO та Google (іконка в пошуку, індексація)
+
+Короткий покроковий гайд: **[docs/SEO-UK.md](docs/SEO-UK.md)** (Search Console, favicon, запити на кшталт «mobilny bar»).
+
 ## Структура
 
 ```
