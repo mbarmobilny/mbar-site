@@ -46,6 +46,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Chrome system libraries for the Puppeteer prerender step (npm run build)
+      - name: Install Chrome dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: npx puppeteer browsers install chrome --install-deps
+
       - name: Lint
         run: npm run lint
 
