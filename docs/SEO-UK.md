@@ -12,6 +12,17 @@
 - Тексти title/description — з ключовими фразами (mobilny bar, Leszno тощо) без спаму.
 - **Дві мови (PL + EN):** у `<head>` додані **hreflang** (`/` = pl, `/?lang=en` = en), у JSON-LD — `availableLanguage`. Після перемикання мови на сайті в адресі з’являється `?lang=en` (можна ділитися англомовним посиланням). У sitemap є обидва URL.
 
+## Оновлення (липень 2026): міста, сторінки-шляхи, пререндеринг
+
+- **Міста в контенті й даних:** Leszno, Poznań, Wrocław тепер згадуються в title, description, hero, футері та JSON-LD (`areaServed` — три міста + радіус 100 км, додано `sameAs` на Instagram/Facebook).
+- **Справжні URL замість hash:** `/galeria`, `/cennik`, `/o-nas`, `/kontakt` — кожна сторінка тепер окрема для Google (старі посилання `/#gallery` тощо автоматично перенаправляються).
+- **Посадкові сторінки міст:** `/mobilny-bar-poznan` і `/mobilny-bar-wroclaw` — унікальний текст під кожне місто, власні title/description/canonical + JSON-LD `Service`. Саме вони мають ловити запити «mobilny bar poznań/wrocław».
+- **Пререндеринг:** `npm run build` рендерить кожну сторінку в статичний HTML (`scripts/prerender.mjs`), тож Google бачить весь текст без виконання JavaScript.
+- **Canonical + hreflang** оновлюються під кожну сторінку; кожна сторінка має свій `<h1>`.
+- **Sitemap** (`public/sitemap.xml`) містить усі 7 сторінок — коли додаєш нову сторінку, онови його і `ROUTES` у `scripts/prerender.mjs` та `PAGE_PATHS` у `src/utils/routes.ts`.
+
+**Після деплою цього оновлення:** у Search Console → URL inspection → Request indexing для `https://mbar.events/`, `https://mbar.events/mobilny-bar-poznan` і `https://mbar.events/mobilny-bar-wroclaw`.
+
 ## Що зробити тобі вперше (покроково)
 
 ### 1. Google Search Console (обов’язково)

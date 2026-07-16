@@ -1,10 +1,16 @@
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from "react";
 import { createPortal } from "react-dom";
 import { Button } from "./ui/button";
 import { getTranslation } from "../utils/translations";
 import { useLanguage } from "../context/LanguageContext";
 import type { NavigateHandler, Page } from "../types/navigation";
+import { PAGE_PATHS } from "../utils/routes";
 import logo from "../assets/logo.png";
 import { motion } from "motion/react";
 
@@ -32,12 +38,17 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleLogoClick = () => {
+  const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     closeMenu();
     onNavigate("home");
   };
 
-  const handleNavigation = (page: Page) => {
+  const handleNavigation = (
+    event: ReactMouseEvent<HTMLAnchorElement>,
+    page: Page
+  ) => {
+    event.preventDefault();
     closeMenu();
     onNavigate(page);
   };
@@ -84,8 +95,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
   }, [isMenuOpen]);
 
   useEffect(() => {
-    window.addEventListener("hashchange", closeMenu);
-    return () => window.removeEventListener("hashchange", closeMenu);
+    window.addEventListener("popstate", closeMenu);
+    return () => window.removeEventListener("popstate", closeMenu);
   }, []);
 
   useEffect(() => {
@@ -137,7 +148,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
               }}
             >
               <div className="mx-auto flex h-full max-w-[1920px] items-center justify-between px-4">
-                <button
+                <a
+                  href={PAGE_PATHS.home}
                   onClick={handleLogoClick}
                   className="flex items-center justify-center hover:opacity-80 transition-opacity"
                   aria-label="mBar Home"
@@ -149,7 +161,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                       className="header-logo-img"
                     />
                   </span>
-                </button>
+                </a>
                 <button
                   onClick={closeMenu}
                   className="p-2 text-primary hover:text-secondary transition-colors"
@@ -170,9 +182,10 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
             >
               <div className="flex flex-col space-y-6">
                 {navigation.map((item) => (
-                  <button
+                  <a
                     key={item.id}
-                    onClick={() => handleNavigation(item.id)}
+                    href={PAGE_PATHS[item.id]}
+                    onClick={(event) => handleNavigation(event, item.id)}
                     aria-current={currentPage === item.id ? "page" : undefined}
                     className={`text-2xl font-serif text-left py-2 border-b border-primary/5 ${
                       currentPage === item.id
@@ -181,7 +194,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                     }`}
                   >
                     {item.name}
-                  </button>
+                  </a>
                 ))}
                 <div className="pt-4">
                   <button
@@ -209,7 +222,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
         <div className="max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12">
           <div className="flex justify-between items-center h-20 md:h-24">
             <div className="flex-shrink-0 flex items-center">
-              <button
+              <a
+                href={PAGE_PATHS.home}
                 onClick={handleLogoClick}
                 className="flex items-center justify-center hover:opacity-80 transition-opacity"
                 aria-label="mBar Home"
@@ -217,14 +231,15 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 <span className="header-logo-wrapper">
                   <img src={logo} alt="mBar Logo" className="header-logo-img" />
                 </span>
-              </button>
+              </a>
             </div>
 
             <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
               {navigation.map((item) => (
-                <button
+                <a
                   key={item.id}
-                  onClick={() => onNavigate(item.id)}
+                  href={PAGE_PATHS[item.id]}
+                  onClick={(event) => handleNavigation(event, item.id)}
                   aria-current={currentPage === item.id ? "page" : undefined}
                   className={`relative text-sm font-medium tracking-widest uppercase py-2 transition-colors ${
                     currentPage === item.id
@@ -239,7 +254,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                       className="absolute left-0 right-0 bottom-0 h-0.5 bg-secondary"
                     />
                   )}
-                </button>
+                </a>
               ))}
             </nav>
 

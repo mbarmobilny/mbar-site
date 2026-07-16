@@ -14,6 +14,7 @@
 4. Build settings:
    - **Build command:** `npm run build`
    - **Publish directory:** `dist`
+   - `npm run build` = `vite build` + пререндеринг (`scripts/prerender.mjs`): Puppeteer завантажує Chrome при `npm install`, тому перший білд на Netlify триває на ~1–2 хв довше — це нормально. Результат: кожна сторінка (`/`, `/cennik`, `/mobilny-bar-poznan` тощо) лежить у `dist` як готовий HTML з текстом і мета-тегами.
 5. **Environment variables** (Site settings → Environment variables → Add variable):
    - `VITE_FORMSPREE_ID` = твій Formspree ID (наприклад `xwvnyqzz`)
    - `VITE_PHONE` = номер телефону

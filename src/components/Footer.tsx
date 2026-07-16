@@ -1,9 +1,11 @@
 import { Instagram, Facebook } from "lucide-react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { getTranslation } from "../utils/translations";
 import { Container } from "./Container";
 import { useLanguage } from "../context/LanguageContext";
 import { PHONE, EMAIL, INSTAGRAM_URL, FACEBOOK_URL } from "../utils/constants";
-import type { NavigateHandler } from "../types/navigation";
+import type { NavigateHandler, Page } from "../types/navigation";
+import { PAGE_PATHS } from "../utils/routes";
 import { ContactWithCopy } from "./CopyableContactLink";
 
 interface FooterProps {
@@ -13,6 +15,14 @@ interface FooterProps {
 export function Footer({ onNavigate }: FooterProps) {
   const { language } = useLanguage();
   const currentYear = new Date().getFullYear();
+
+  const handleNavClick = (
+    event: ReactMouseEvent<HTMLAnchorElement>,
+    page: Page
+  ) => {
+    event.preventDefault();
+    onNavigate(page);
+  };
 
   return (
     <footer className="bg-primary border-t border-white/10 text-[#faf9f7]">
@@ -42,12 +52,13 @@ export function Footer({ onNavigate }: FooterProps) {
               {(["home", "gallery", "prices", "about", "contact"] as const).map(
                 (item) => (
                   <li key={item}>
-                    <button
-                      onClick={() => onNavigate(item)}
+                    <a
+                      href={PAGE_PATHS[item]}
+                      onClick={(event) => handleNavClick(event, item)}
                       className="text-lg hover:text-secondary transition-colors"
                     >
                       {getTranslation(language, item)}
-                    </button>
+                    </a>
                   </li>
                 )
               )}
@@ -100,11 +111,28 @@ export function Footer({ onNavigate }: FooterProps) {
             </ul>
           </div>
 
-          <div className="hidden lg:block lg:col-span-3 border-l border-white/10 pl-8">
-            <p className="text-3xl font-serif leading-tight text-white/80">
-              {language === "pl"
-                ? "Zarezerwuj termin już dziś."
-                : "Reserve your date today."}
+          <div className="md:col-span-4 lg:col-span-3">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-secondary mb-8">
+              {language === "pl" ? "Obszar obsługi" : "Service area"}
+            </h4>
+            <ul className="space-y-4">
+              {(["poznan", "wroclaw"] as const).map((city) => (
+                <li key={city}>
+                  <a
+                    href={PAGE_PATHS[city]}
+                    onClick={(event) => handleNavClick(event, city)}
+                    className="text-lg hover:text-secondary transition-colors"
+                  >
+                    {getTranslation(
+                      language,
+                      city === "poznan" ? "cityPoznanNav" : "cityWroclawNav"
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-white/40 max-w-xs leading-relaxed mt-8 uppercase tracking-wide">
+              {getTranslation(language, "footerServiceArea")}
             </p>
           </div>
         </div>

@@ -4173,3 +4173,136 @@ html.has-lightbox body {
   letter-spacing: 0.12em;
   color: var(--secondary);
 }
+
+/* ── City landing pages (Poznań / Wrocław) ──────────────────────
+   Custom styles: src/index.css is precompiled Tailwind, so page-
+   specific design lives here. Brand tokens: #1a4a3f / #b8945f.  */
+.city-hero-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #1a4a3f;
+}
+
+.city-route-panel {
+  background: #b8945f;
+  color: #1a4a3f;
+  padding: 2.25rem 1.75rem;
+}
+@media (min-width: 1024px) {
+  .city-route-panel {
+    position: sticky;
+    top: 8rem;
+    padding: 2.5rem;
+  }
+}
+.city-route-eyebrow {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(26, 74, 63, 0.65);
+  margin-bottom: 1.75rem;
+}
+.city-route-stop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.city-route-marker {
+  width: 9px;
+  height: 9px;
+  border: 1px solid #1a4a3f;
+  flex-shrink: 0;
+}
+.city-route-marker--dest {
+  background: #1a4a3f;
+}
+.city-route-leg {
+  position: relative;
+  margin: 0.5rem 0 0.5rem 4px;
+  padding: 1.25rem 0 1.25rem 1.5rem;
+}
+.city-route-leg::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-left: 1px dashed rgba(26, 74, 63, 0.5);
+  transform-origin: top;
+  animation: city-route-draw 0.9s ease-out 0.4s both;
+}
+@keyframes city-route-draw {
+  from {
+    transform: scaleY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .city-route-leg::before {
+    animation: none;
+  }
+}
+.city-route-km {
+  display: block;
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(2.5rem, 3vw, 3.25rem);
+  line-height: 0.95;
+}
+.city-route-zone {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(26, 74, 63, 0.75);
+}
+.city-route-cta {
+  margin-top: 2rem;
+}
+.city-route-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #1a4a3f;
+  border-bottom: 1px solid rgba(26, 74, 63, 0.5);
+  padding-bottom: 2px;
+  transition: border-color 0.3s;
+}
+.city-route-link:hover {
+  border-color: #1a4a3f;
+}
+.city-route-facts {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(26, 74, 63, 0.3);
+  display: grid;
+  gap: 1.25rem;
+}
+.city-route-facts dt {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(26, 74, 63, 0.6);
+  margin-bottom: 0.35rem;
+}
+.city-route-facts dd {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.city-tick {
+  width: 8px;
+  height: 8px;
+  background: #b8945f;
+  margin-bottom: 1.5rem;
+}

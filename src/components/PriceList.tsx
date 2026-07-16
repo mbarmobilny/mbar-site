@@ -120,6 +120,7 @@ export function PriceList({ onNavigate }: PriceListProps) {
       <Container>
         {/* ── Page header ── */}
         <SectionHeader
+          as="h1"
           label={getTranslation(language, "pricesLabel")}
           title={getTranslation(language, "pricesTitle")}
           description={getTranslation(language, "pricesSubtitle")}

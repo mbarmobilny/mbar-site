@@ -18,7 +18,8 @@ export const translations = {
 
     // Hero section
     heroTitle: "mBar",
-    heroSubtitle: "Premium Mobilny Bar",
+    heroSubtitle: "Premium mobilny bar na wesela i eventy",
+    heroServiceArea: "Leszno · Poznań · Wrocław — dojazd do 100 km",
     heroTagline: "Z myślą o każdym detalu.",
     heroDescription:
       "Podnieś swoje specjalne wydarzenia na wyższy poziom dzięki kraftowym koktajlom, profesjonalnym barmanom i niezapomnianym doświadczeniom",
@@ -184,7 +185,7 @@ export const translations = {
     contactDetails: "Dane Kontaktowe",
     area: "Obszar",
     response: "Odpowiedź",
-    serviceArea: "Promień 100 km od miasta Leszno",
+    serviceArea: "Leszno, Poznań, Wrocław — do 100 km od Leszna",
     responseTime: "W ciągu 24 godzin",
     whyUs: "Dlaczego My?",
     customMenuShort: "Spersonalizowane menu",
@@ -230,6 +231,9 @@ export const translations = {
     followUs: "Śledź nas",
     findUsOn: "Znajdź nas na",
     allRightsReserved: "Wszystkie prawa zastrzeżone.",
+    footerServiceArea: "Leszno · Poznań · Wrocław i okolice — do 100 km",
+    cityPoznanNav: "Mobilny bar Poznań",
+    cityWroclawNav: "Mobilny bar Wrocław",
 
     // Error boundary
     errorTitle: "Coś poszło nie tak",
@@ -263,7 +267,8 @@ export const translations = {
 
     // Hero section
     heroTitle: "mBar",
-    heroSubtitle: "Premium Mobile Bar Service",
+    heroSubtitle: "Premium mobile bar for weddings & events",
+    heroServiceArea: "Leszno · Poznań · Wrocław — service within 100 km",
     heroTagline: "With attention to every detail.",
     heroDescription:
       "Elevate your special events with craft cocktails, professional bartenders, and unforgettable experiences",
@@ -436,7 +441,7 @@ export const translations = {
     contactDetails: "Contact Details",
     area: "Area",
     response: "Response",
-    serviceArea: "100 km radius from Leszno",
+    serviceArea: "Leszno, Poznań, Wrocław — up to 100 km from Leszno",
     responseTime: "Within 24 hours",
     whyUs: "Why Us?",
     customMenuShort: "Custom menus",
@@ -482,6 +487,10 @@ export const translations = {
     followUs: "Follow Us",
     findUsOn: "Find us on",
     allRightsReserved: "All rights reserved.",
+    footerServiceArea:
+      "Leszno · Poznań · Wrocław and surroundings — up to 100 km",
+    cityPoznanNav: "Mobile bar Poznań",
+    cityWroclawNav: "Mobile bar Wrocław",
 
     // Process
     processTitle: "Our Process",

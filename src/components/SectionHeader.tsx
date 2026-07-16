@@ -15,6 +15,8 @@ interface SectionHeaderProps {
   /** Optional subtitle on the right */
   description?: string;
   className?: string;
+  /** Heading level: "h1" for the page-level heading (one per page), "h2" for sections. */
+  as?: "h1" | "h2";
 }
 
 export function SectionHeader({
@@ -22,6 +24,7 @@ export function SectionHeader({
   title,
   description,
   className,
+  as: Heading = "h2",
 }: SectionHeaderProps) {
   return (
     <div
@@ -47,9 +50,9 @@ export function SectionHeader({
             description && "md:flex-row md:items-end md:justify-between"
           )}
         >
-          <h2 className="font-serif text-primary leading-[0.9] tracking-tight section-header-title">
+          <Heading className="font-serif text-primary leading-[0.9] tracking-tight section-header-title">
             {title}
-          </h2>
+          </Heading>
           {description && (
             <p className="text-sm text-primary/55 max-w-sm font-light leading-relaxed md:text-right">
               {description}

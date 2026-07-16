@@ -18,8 +18,7 @@ import { createPortal } from "react-dom";
 import { Play } from "lucide-react";
 
 type GalleryImageCategory = "cocktails" | "setup" | "events";
-type GalleryMediaFilter = "photos" | "video";
-type GalleryPhotoFilter = "all" | GalleryImageCategory;
+type GalleryFilter = "all" | GalleryImageCategory | "video";
 
 interface GalleryImage {
   src: string;
@@ -201,12 +200,13 @@ const galleryImages: GalleryImage[] = [
 const galleryVideos: GalleryVideo[] = [
   { videoId: "FulN15i4_pA", title: "mBar", category: "video" },
   { videoId: "5SQ31Ku2r14", title: "mBar", category: "video" },
-  { videoId: "6l9PQW5UuOo", title: "mBar", category: "video" },
-  { videoId: "kG6lon5xN5g", title: "mBar", category: "video" },
   { videoId: "D1teIypXpCI", title: "mBar", category: "video" },
   { videoId: "D1c9e-uk23M", title: "mBar", category: "video" },
   { videoId: "E0ijRB4CL0k", title: "mBar", category: "video" },
-  { videoId: "S2IelXzUqQI", title: "mBar", category: "video" },
+  { videoId: "47InWch2VlY", title: "mBar", category: "video" },
+  { videoId: "eA4DjexNxrE", title: "mBar", category: "video" },
+  { videoId: "r5pGpaotRX4", title: "mBar", category: "video" },
+  { videoId: "CM3xiZH1RqI", title: "mBar", category: "video" },
 ];
 
 function getYoutubeThumbnail(videoId: string) {
@@ -284,10 +284,7 @@ function VideoThumbnail({
 
 export function Gallery() {
   const { language } = useLanguage();
-  const [selectedMediaFilter, setSelectedMediaFilter] =
-    useState<GalleryMediaFilter>("photos");
-  const [selectedPhotoFilter, setSelectedPhotoFilter] =
-    useState<GalleryPhotoFilter>("all");
+  const [selectedFilter, setSelectedFilter] = useState<GalleryFilter>("all");
   const [videoOpenId, setVideoOpenId] = useState<string | null>(null);
   const [videoModalWidth, setVideoModalWidth] = useState(() =>
     typeof window === "undefined"
@@ -299,25 +296,7 @@ export function Gallery() {
   const lightboxRef = useRef<SimpleLightbox | null>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
 
-  const mediaFilters = useMemo(
-    () => [
-      {
-        id: "photos" as const,
-        name: getTranslation(language, "galleryPhotos"),
-      },
-      ...(galleryVideos.length > 0
-        ? [
-            {
-              id: "video" as const,
-              name: getTranslation(language, "galleryVideo"),
-            },
-          ]
-        : []),
-    ],
-    [language]
-  );
-
-  const photoFilters = useMemo(
+  const filters = useMemo(
     () => [
       { id: "all" as const, name: getTranslation(language, "allCategories") },
       {
@@ -332,24 +311,31 @@ export function Gallery() {
         id: "events" as const,
         name: getTranslation(language, "galleryEvents"),
       },
+      ...(galleryVideos.length > 0
+        ? [
+            {
+              id: "video" as const,
+              name: getTranslation(language, "galleryVideo"),
+            },
+          ]
+        : []),
     ],
     [language]
   );
 
   const filteredImages = useMemo(() => {
-    if (selectedMediaFilter !== "photos") return [];
-    if (selectedPhotoFilter === "all") return galleryImages;
-    return galleryImages.filter(
-      (image) => image.category === selectedPhotoFilter
-    );
-  }, [selectedMediaFilter, selectedPhotoFilter]);
+    if (selectedFilter === "video") return [];
+    if (selectedFilter === "all") return galleryImages;
+    return galleryImages.filter((image) => image.category === selectedFilter);
+  }, [selectedFilter]);
 
+  // "All" mixes videos into the grid (after photos); "video" shows them alone.
   const filteredVideos = useMemo(() => {
-    if (selectedMediaFilter === "video") {
+    if (selectedFilter === "video" || selectedFilter === "all") {
       return galleryVideos;
     }
     return [];
-  }, [selectedMediaFilter]);
+  }, [selectedFilter]);
 
   const filteredItems = useMemo<GalleryItem[]>(
     () => [
@@ -503,26 +489,25 @@ export function Gallery() {
       <Container>
         {/* Header Section */}
         <SectionHeader
+          as="h1"
           label={getTranslation(language, "galleryWorkLabel")}
           title={getTranslation(language, "galleryTitle")}
           description={getTranslation(language, "gallerySubtitle")}
           className="mb-12"
         />
 
-        {/* Media Filter Section */}
-        <div className="mb-4 flex flex-wrap gap-x-8 gap-y-4">
-          {mediaFilters.map((filter) => (
+        {/* Filter Section — one row: photo categories + videos */}
+        <div className="mb-12 flex flex-wrap gap-x-8 gap-y-4">
+          {filters.map((filter) => (
             <button
               key={filter.id}
               onClick={() => {
-                setSelectedMediaFilter(filter.id);
-                if (filter.id !== "video") {
-                  setVideoOpenId(null);
-                }
+                setSelectedFilter(filter.id);
+                setVideoOpenId(null);
               }}
-              aria-pressed={selectedMediaFilter === filter.id}
+              aria-pressed={selectedFilter === filter.id}
               className={`text-sm uppercase tracking-widest transition-colors duration-300 ${
-                selectedMediaFilter === filter.id
+                selectedFilter === filter.id
                   ? "text-primary font-bold border-b-2 border-secondary pb-1"
                   : "text-primary/50 hover:text-primary pb-1"
               }`}
@@ -531,25 +516,6 @@ export function Gallery() {
             </button>
           ))}
         </div>
-
-        {selectedMediaFilter === "photos" && (
-          <div className="mb-12 flex flex-wrap gap-x-8 gap-y-4">
-            {photoFilters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => setSelectedPhotoFilter(filter.id)}
-                aria-pressed={selectedPhotoFilter === filter.id}
-                className={`text-xs uppercase tracking-[0.2em] transition-colors duration-300 ${
-                  selectedPhotoFilter === filter.id
-                    ? "text-primary font-bold border-b border-secondary pb-1"
-                    : "text-primary/50 hover:text-primary pb-1"
-                }`}
-              >
-                {filter.name}
-              </button>
-            ))}
-          </div>
-        )}
 
         {/* Grid Section - Strict Grid, No Gaps or Small Gaps, Sharp Edges */}
         <div

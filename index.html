@@ -4,17 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#10472b" />
-    <meta name="description" content="mBar — mobilny bar na wesela i eventy. Mobilne bary z dojazdem: baza Leszno (Wielkopolskie), obsługa do 100 km. Serwis barowy premium." />
-    <title>mBar — Premium mobilny bar na wesela i eventy | Leszno</title>
+    <meta name="description" content="mBar — premium mobilny bar na wesela i eventy. Leszno, Poznań, Wrocław i okolice — dojazd do 100 km. Koktajle autorskie i serwis barowy premium." />
+    <title>mBar — Mobilny bar na wesela i eventy | Leszno · Poznań · Wrocław</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Alternate languages (EN version: ?lang=en — synced by the app) -->
-    <link rel="alternate" hreflang="pl" href="https://mbar.events/" />
-    <link rel="alternate" hreflang="en" href="https://mbar.events/?lang=en" />
-    <link rel="alternate" hreflang="x-default" href="https://mbar.events/" />
+    <!-- Canonical + alternate languages (EN version: ?lang=en — synced by the app per page) -->
+    <link rel="canonical" href="https://mbar.events/" id="link-canonical" />
+    <link rel="alternate" hreflang="pl" href="https://mbar.events/" id="link-alt-pl" />
+    <link rel="alternate" hreflang="en" href="https://mbar.events/?lang=en" id="link-alt-en" />
+    <link rel="alternate" hreflang="x-default" href="https://mbar.events/" id="link-alt-xdefault" />
     <!-- Open Graph -->
-    <meta property="og:title" content="mBar — Premium mobilny bar na wesela i eventy | Leszno" />
-    <meta property="og:description" content="Premium mobilny bar i mobilne bary z dojazdem — Leszno, Wielkopolskie. Wesela, eventy firmowe, prywatne imprezy. Do 100 km od Leszna." />
+    <meta property="og:title" content="mBar — Mobilny bar na wesela i eventy | Leszno · Poznań · Wrocław" />
+    <meta property="og:description" content="Premium mobilny bar z dojazdem — Leszno, Poznań, Wrocław i okolice (do 100 km). Wesela, eventy firmowe, prywatne imprezy." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pl_PL" />
     <meta property="og:locale:alternate" content="en_US" id="meta-og-locale-alternate" />
@@ -23,8 +24,8 @@
     <meta property="og:image:alt" content="mBar logo and premium mobile bar branding" />
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="mBar — Premium mobilny bar na wesela i eventy | Leszno" />
-    <meta name="twitter:description" content="Premium mobilny bar z dojazdem — Leszno i okolice (100 km). Wesela, eventy firmowe, prywatne imprezy." />
+    <meta name="twitter:title" content="mBar — Mobilny bar na wesela i eventy | Leszno · Poznań · Wrocław" />
+    <meta name="twitter:description" content="Premium mobilny bar z dojazdem — Leszno, Poznań, Wrocław i okolice (do 100 km). Wesela, eventy firmowe, prywatne imprezy." />
     <meta name="twitter:image" content="https://mbar.events/og-image.png" />
     <script type="application/ld+json">
       {
@@ -37,12 +38,17 @@
           "mBar Premium mobile bar",
           "Premium mobile bar Leszno"
         ],
-        "description": "Premium mobilny bar na wesela i eventy — mobilne bary z dojazdem. Baza Leszno, Wielkopolskie; obsługa w promieniu ok. 100 km. Serwis barowy premium. Usługi w języku polskim i angielskim.",
+        "description": "Premium mobilny bar na wesela i eventy — mobilne bary z dojazdem. Baza Leszno, Wielkopolskie; obsługa Leszna, Poznania, Wrocławia i okolic w promieniu ok. 100 km. Serwis barowy premium. Usługi w języku polskim i angielskim.",
         "availableLanguage": ["Polish", "English"],
         "url": "https://mbar.events/",
         "image": "https://mbar.events/og-image.png",
         "telephone": "+48578224721",
         "email": "mbarmobilny@gmail.com",
+        "priceRange": "$$",
+        "sameAs": [
+          "https://www.instagram.com/mbarmobilny",
+          "https://www.facebook.com/share/17HJkD8LRt/"
+        ],
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Leszno",
@@ -54,7 +60,20 @@
           "latitude": 51.8403,
           "longitude": 16.5749
         },
-        "areaServed": "Leszno i okolice — promień ok. 100 km (woj. wielkopolskie i sąsiednie)"
+        "areaServed": [
+          { "@type": "City", "name": "Leszno" },
+          { "@type": "City", "name": "Poznań" },
+          { "@type": "City", "name": "Wrocław" },
+          {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+              "@type": "GeoCoordinates",
+              "latitude": 51.8403,
+              "longitude": 16.5749
+            },
+            "geoRadius": 100000
+          }
+        ]
       }
     </script>
   </head>

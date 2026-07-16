@@ -55,6 +55,7 @@ export function About() {
       {/* ── Page header ── */}
       <Container className="pt-16 pb-0">
         <SectionHeader
+          as="h1"
           label={getTranslation(language, "aboutLabel")}
           title={getTranslation(language, "aboutTitle")}
           description={getTranslation(language, "aboutSubtitle")}

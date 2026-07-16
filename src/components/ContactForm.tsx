@@ -305,6 +305,7 @@ export function ContactForm({ selectedPackage = "" }: ContactFormProps) {
     <div className="min-h-screen bg-[#faf9f7] pt-16 pb-20">
       <Container>
         <SectionHeader
+          as="h1"
           label={t("contactLabel")}
           title={t("contactTitle")}
           description={t("contactSubtitle")}

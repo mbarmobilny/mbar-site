@@ -30,24 +30,23 @@ export function Hero({ onNavigate }: HeroProps) {
         >
           <div className="w-16 h-1 bg-secondary mb-8" />
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif text-primary leading-[0.9] tracking-tight mb-8 break-words">
-            <span className="block">
-              {getTranslation(language, "heroTitle").split(" ")[0]}
+          <h1 className="mb-8 break-words">
+            <span className="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif text-primary leading-[0.9] tracking-tight">
+              {getTranslation(language, "heroTitle")}
             </span>
-            <span className="block text-secondary">
-              {getTranslation(language, "heroTitle")
-                .split(" ")
-                .slice(1)
-                .join(" ")}
+            <span className="block mt-4 text-lg md:text-xl lg:text-2xl font-light text-primary/80 tracking-wide max-w-md">
+              {getTranslation(language, "heroSubtitle")}
             </span>
           </h1>
 
-          <h2 className="text-lg md:text-xl lg:text-2xl font-light text-primary/80 mb-10 tracking-wide max-w-md">
-            {getTranslation(language, "heroSubtitle")}
-            <span className="block mt-4 text-base opacity-70 border-l-2 border-secondary pl-4 py-1">
+          <p className="mb-10 max-w-md">
+            <span className="block text-base font-light text-primary/70 border-l-2 border-secondary pl-4 py-1">
               {getTranslation(language, "heroDescription")}
             </span>
-          </h2>
+            <span className="block mt-4 text-xs uppercase tracking-[0.25em] text-primary/60">
+              {getTranslation(language, "heroServiceArea")}
+            </span>
+          </p>
 
           <div className="flex flex-col gap-4 w-full max-w-sm">
             <SwissButton
