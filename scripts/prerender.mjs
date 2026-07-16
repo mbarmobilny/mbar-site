@@ -8,7 +8,7 @@
  * Keep ROUTES in sync with src/utils/routes.ts and public/sitemap.xml.
  */
 import { createServer } from "node:http";
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
@@ -113,11 +113,13 @@ try {
       () => "<!DOCTYPE html>\n" + document.documentElement.outerHTML
     );
 
+    // Flat <route>.html files: Netlify's pretty URLs serve them at /<route>
+    // with a 200 (a <route>/index.html directory would 301 to a trailing
+    // slash, mismatching canonical/sitemap URLs).
     const outFile =
       route === "/"
         ? path.join(DIST, "index.html")
-        : path.join(DIST, route.slice(1), "index.html");
-    await mkdir(path.dirname(outFile), { recursive: true });
+        : path.join(DIST, `${route.slice(1)}.html`);
     await writeFile(outFile, html, "utf8");
     console.log(
       `✓ ${route} → ${path.relative(DIST, outFile)} (${textLength} chars of text)`
