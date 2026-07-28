@@ -10,7 +10,12 @@
   VITE_FACEBOOK_URL = "https://www.facebook.com/share/17HJkD8LRt/"
   VITE_GA_ID = "G-FJ7CQQN5BQ"
 
+# Every real route is prerendered to a flat <route>.html file, which Netlify
+# serves at /<route> with a 200 before any redirect rule runs. So this catch-all
+# only ever matches URLs that genuinely do not exist — it must answer 404, not
+# fall back to the SPA shell (that made every typo a soft-404 duplicate of the
+# homepage). Keep in sync with ROUTES in scripts/prerender.mjs.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
