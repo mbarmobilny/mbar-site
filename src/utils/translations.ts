@@ -231,6 +231,14 @@ export const translations = {
     findUsOn: "Znajdź nas na",
     allRightsReserved: "Wszystkie prawa zastrzeżone.",
     footerServiceArea: "Leszno · Poznań · Wrocław i okolice — do 100 km",
+
+    // Cookie banner
+    cookieTitle: "Pliki cookies",
+    cookieText:
+      "Używamy Google Analytics, żeby wiedzieć, jak odwiedzający korzystają ze strony. To narzędzie zapisuje pliki cookies w Twojej przeglądarce i przekazuje dane do Google. Włączymy je tylko za Twoją zgodą — decyzję możesz zmienić w każdej chwili w stopce strony („Ustawienia cookies”).",
+    cookieAccept: "Akceptuj",
+    cookieReject: "Odrzuć",
+    cookieSettings: "Ustawienia cookies",
     cityPoznanNav: "Mobilny bar Poznań",
     cityWroclawNav: "Mobilny bar Wrocław",
 
@@ -487,6 +495,14 @@ export const translations = {
     allRightsReserved: "All rights reserved.",
     footerServiceArea:
       "Leszno · Poznań · Wrocław and surroundings — up to 100 km",
+
+    // Cookie banner
+    cookieTitle: "Cookies",
+    cookieText:
+      "We use Google Analytics to understand how visitors use this site. It stores cookies in your browser and sends data to Google. We only turn it on with your consent — you can change your choice at any time in the footer (“Cookie settings”).",
+    cookieAccept: "Accept",
+    cookieReject: "Reject",
+    cookieSettings: "Cookie settings",
     cityPoznanNav: "Mobile bar Poznań",
     cityWroclawNav: "Mobile bar Wrocław",
 

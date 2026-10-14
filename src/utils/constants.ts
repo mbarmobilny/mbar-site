@@ -7,6 +7,8 @@ export const EMAIL = import.meta.env.VITE_EMAIL || "mbarmobilny@gmail.com";
 export const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID as
   | string
   | undefined;
+/** Google Analytics 4 — loaded only after cookie consent (see cookieConsent.ts). */
+export const GA_ID = import.meta.env.VITE_GA_ID as string | undefined;
 export const INSTAGRAM_URL =
   import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/mbarmobilny";
 export const FACEBOOK_URL =

@@ -2,6 +2,21 @@
 <html lang="pl">
   <head>
     <meta charset="UTF-8" />
+    <!-- Google Consent Mode: analytics stays off until the visitor accepts the
+         cookie banner (art. 399 PKE). Must run before any GA tag, including
+         one injected by Netlify. Key shared with src/utils/cookieConsent.ts. -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      var mbarConsent = null;
+      try { mbarConsent = localStorage.getItem("mbar-cookie-consent"); } catch (e) {}
+      gtag("consent", "default", {
+        analytics_storage: mbarConsent === "granted" ? "granted" : "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied"
+      });
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#1a4a3f" />

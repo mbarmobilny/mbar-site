@@ -8,6 +8,7 @@ import { CallToAction } from "./components/CallToAction";
 import { Footer } from "./components/Footer";
 import { IceCubeSpinner } from "./components/IceCubeSpinner";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { CookieBanner } from "./components/CookieBanner";
 import { useLanguage } from "./context/LanguageContext";
 import type { Page } from "./types/navigation";
 import {
@@ -342,6 +343,7 @@ export default function App() {
       )}
       <Footer onNavigate={handleNavigate} />
       <ScrollToTop />
+      <CookieBanner />
       <Toaster position="bottom-right" />
     </div>
   );

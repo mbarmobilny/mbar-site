@@ -7,6 +7,10 @@ import { PHONE, EMAIL, INSTAGRAM_URL, FACEBOOK_URL } from "../utils/constants";
 import type { NavigateHandler, Page } from "../types/navigation";
 import { PAGE_PATHS } from "../utils/routes";
 import { ContactWithCopy } from "./CopyableContactLink";
+import {
+  isConsentRequired,
+  openCookieSettings,
+} from "../utils/cookieConsent";
 
 interface FooterProps {
   onNavigate: NavigateHandler;
@@ -41,6 +45,15 @@ export function Footer({ onNavigate }: FooterProps) {
               <p className="text-xs text-white/40 uppercase tracking-widest">
                 © {currentYear} mBar.
               </p>
+              {isConsentRequired && (
+                <button
+                  type="button"
+                  onClick={openCookieSettings}
+                  className="mt-2 text-xs text-white/40 uppercase tracking-widest hover:text-secondary transition-colors"
+                >
+                  {getTranslation(language, "cookieSettings")}
+                </button>
+              )}
             </div>
           </div>
 
