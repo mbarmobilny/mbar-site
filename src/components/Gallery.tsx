@@ -59,12 +59,17 @@ import imgCocktailsWs from "../assets/gallery-cocktails-ws.webp";
 import imgCocktailsYennefer from "../assets/gallery-cocktails-yennefer.webp";
 
 // Bar setup
-import imgBar1 from "../assets/gallery-bar-setup-1.webp";
-import imgBar2 from "../assets/gallery-bar-setup-2.webp";
-import imgBar3 from "../assets/gallery-bar-setup-3.webp";
 import imgBar4 from "../assets/gallery-bar-setup-4.webp";
-import imgBar5 from "../assets/gallery-bar-setup-5.webp";
-import imgBar6 from "../assets/gallery-bar-setup-6.webp";
+import imgBar7 from "../assets/gallery-bar-setup-7.webp";
+import imgBar8 from "../assets/gallery-bar-setup-8.webp";
+import imgBar9 from "../assets/gallery-bar-setup-9.webp";
+import imgBar10 from "../assets/gallery-bar-setup-10.webp";
+import imgBar11 from "../assets/gallery-bar-setup-11.webp";
+import imgBar12 from "../assets/gallery-bar-setup-12.webp";
+import imgBar14 from "../assets/gallery-bar-setup-14.webp";
+import imgBar16 from "../assets/gallery-bar-setup-16.webp";
+import imgBar17 from "../assets/gallery-bar-setup-17.webp";
+import imgBar18 from "../assets/gallery-bar-setup-18.webp";
 
 // Events
 import imgEventsGringo from "../assets/gallery-events-gringo.webp";
@@ -73,9 +78,15 @@ import imgEventsPornstar from "../assets/gallery-events-pornstar.webp";
 import imgEventsWhiskeysour from "../assets/gallery-events-whiskeysour.webp";
 import imgEventsImg1 from "../assets/gallery-events-img1.webp";
 import imgEventsImg2 from "../assets/gallery-events-img2.webp";
-import imgEventsImg3 from "../assets/gallery-events-img3.webp";
-import imgEventsImg4 from "../assets/gallery-events-img4.webp";
 import imgEventsImg5 from "../assets/gallery-events-img5.webp";
+import imgEventsImg6 from "../assets/gallery-events-img6.webp";
+import imgEventsImg7 from "../assets/gallery-events-img7.webp";
+import imgEventsImg8 from "../assets/gallery-events-img8.webp";
+import imgEventsImg9 from "../assets/gallery-events-img9.webp";
+import imgEventsImg10 from "../assets/gallery-events-img10.webp";
+import imgEventsBartender from "../assets/gallery-events-bartender.webp";
+import imgEventsCocktailsLineup from "../assets/gallery-events-cocktails-lineup.webp";
+import imgEventsCocktailsTrio from "../assets/gallery-events-cocktails-trio.webp";
 
 const galleryImages: GalleryImage[] = [
   // Cocktails
@@ -156,17 +167,71 @@ const galleryImages: GalleryImage[] = [
     category: "cocktails",
     captionKey: "cocktailGinTonicCaption",
   },
-  // Bar setup
-  { src: imgBar1, alt: "Bar setup", title: "Bar Setup 1", category: "setup" },
-  { src: imgBar6, alt: "Bar setup", title: "Bar Setup 6", category: "setup" },
-  { src: imgBar2, alt: "Bar setup", title: "Bar Setup 2", category: "setup" },
-  { src: imgBar3, alt: "Bar setup", title: "Bar Setup 3", category: "setup" },
-  { src: imgBar5, alt: "Bar setup", title: "Bar Setup 5", category: "setup" },
+  // Bar setup — the bar itself, no people (photos with people go to Events)
   { src: imgBar4, alt: "Bar setup", title: "Bar Setup 4", category: "setup" },
+  {
+    src: imgBar17,
+    alt: "Butelki z autorskimi syropami na półce baru mBar",
+    title: "Bar Setup 17",
+    category: "setup",
+  },
+  {
+    src: imgBar7,
+    alt: "Mobilny bar mBar w pałacowej sali",
+    title: "Bar Setup 7",
+    category: "setup",
+  },
+  {
+    src: imgBar18,
+    alt: "Kieliszki coupe na bambusowej półce baru mBar",
+    title: "Bar Setup 18",
+    category: "setup",
+  },
+  {
+    src: imgBar8,
+    alt: "Bar mBar z widokiem na ogród",
+    title: "Bar Setup 8",
+    category: "setup",
+  },
+  {
+    src: imgBar9,
+    alt: "Mobilny bar mBar w sali z cegłą i drewnianymi belkami",
+    title: "Bar Setup 9",
+    category: "setup",
+  },
+  {
+    src: imgBar10,
+    alt: "Bar mBar na tle ceglanej ściany z lampkami",
+    title: "Bar Setup 10",
+    category: "setup",
+  },
+  {
+    src: imgBar11,
+    alt: "Półki barowe mBar z alkoholami przy oknie",
+    title: "Bar Setup 11",
+    category: "setup",
+  },
+  {
+    src: imgBar12,
+    alt: "Kosz pomarańczy i gipsówka na barze mBar",
+    title: "Bar Setup 12",
+    category: "setup",
+  },
+  {
+    src: imgBar14,
+    alt: "Shakery i karta koktajli na barze mBar",
+    title: "Bar Setup 14",
+    category: "setup",
+  },
+  {
+    src: imgBar16,
+    alt: "Koktajle mBar z pianką i gipsówką",
+    title: "Bar Setup 16",
+    category: "setup",
+  },
 
   // Events
   { src: imgEventsImg1, alt: "Event", title: "Event 1", category: "events" },
-  { src: imgEventsImg3, alt: "Event", title: "Event 3", category: "events" },
   { src: imgEventsImg5, alt: "Event", title: "Event 5", category: "events" },
   {
     src: imgEventsNegroni,
@@ -193,11 +258,60 @@ const galleryImages: GalleryImage[] = [
     title: "Event - Gringo",
     category: "events",
   },
-  { src: imgEventsImg4, alt: "Event", title: "Event 4", category: "events" },
+  {
+    src: imgEventsBartender,
+    alt: "Barman mBar przelewa koktajl przez sitko",
+    title: "Event - Bartender",
+    category: "events",
+  },
+  {
+    src: imgEventsImg6,
+    alt: "Barman mBar przygotowuje koktajle",
+    title: "Event 6",
+    category: "events",
+  },
+  {
+    src: imgEventsCocktailsLineup,
+    alt: "Pięć koktajli mBar na podświetlanym barze",
+    title: "Event - Cocktail lineup",
+    category: "events",
+  },
+  {
+    src: imgEventsImg7,
+    alt: "Barman mBar za barem — zdjęcie czarno-białe",
+    title: "Event 7",
+    category: "events",
+  },
+  {
+    src: imgEventsImg8,
+    alt: "Barman mBar przelewa koktajl z shakera",
+    title: "Event 8",
+    category: "events",
+  },
+  {
+    src: imgEventsCocktailsTrio,
+    alt: "Trzy koktajle mBar na barze",
+    title: "Event - Cocktail trio",
+    category: "events",
+  },
+  {
+    src: imgEventsImg9,
+    alt: "Barman mBar z shakerem",
+    title: "Event 9",
+    category: "events",
+  },
+  {
+    src: imgEventsImg10,
+    alt: "Barman mBar przy półkach barowych — zdjęcie czarno-białe",
+    title: "Event 10",
+    category: "events",
+  },
 ];
 
 /** YouTube videos — Shorts from youtube.com/shorts/VIDEO_ID */
 const galleryVideos: GalleryVideo[] = [
+  { videoId: "ok2Hfs_9iLo", title: "mBar", category: "video" },
+  { videoId: "JiZelc-oUbQ", title: "mBar", category: "video" },
   { videoId: "FulN15i4_pA", title: "mBar", category: "video" },
   { videoId: "5SQ31Ku2r14", title: "mBar", category: "video" },
   { videoId: "D1teIypXpCI", title: "mBar", category: "video" },
