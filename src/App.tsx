@@ -17,6 +17,7 @@ import {
   getCanonicalUrl,
   normalizePath,
 } from "./utils/routes";
+import { getStats } from "./utils/stats";
 
 type LazyModule<P extends object> = {
   default: ComponentType<P>;
@@ -101,6 +102,8 @@ function setLinkHref(id: string, href: string) {
   document.getElementById(id)?.setAttribute("href", href);
 }
 
+const { years: yearsOfExperience } = getStats();
+
 /** Per-page titles and descriptions (baked into prerendered HTML). */
 const PAGE_META: Record<
   Page,
@@ -148,12 +151,12 @@ const PAGE_META: Record<
     pl: {
       title: "O nas | mBar — mobilny bar",
       description:
-        "Poznaj mBar — premium mobilny bar z Leszna. 5 lat doświadczenia, autorskie koktajle i krystalicznie czysty lód.",
+        `Poznaj mBar — premium mobilny bar z Leszna. ${yearsOfExperience} lat doświadczenia, autorskie koktajle i krystalicznie czysty lód.`,
     },
     en: {
       title: "About | mBar — mobile bar",
       description:
-        "Meet mBar — a premium mobile bar based in Leszno, Poland. 5 years of experience, signature cocktails and crystal-clear ice.",
+        `Meet mBar — a premium mobile bar based in Leszno, Poland. ${yearsOfExperience} years of experience, signature cocktails and crystal-clear ice.`,
     },
   },
   contact: {

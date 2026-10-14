@@ -27,7 +27,6 @@ export const translations = {
     viewWork: "Zobacz nasze prace",
     rating: "4.9/5 Ocena",
     events: "500+ Wydarzeń",
-    experience: "5 lat doświadczenia",
     trusted: "Zaufane przez wiodące miejsca i organizatorów wydarzeń",
     licensed: "W pełni licencjonowany",
     insured: "Ubezpieczony",
@@ -74,7 +73,7 @@ export const translations = {
     aboutTitle: "O mBar",
     aboutSubtitle: "Pasja do doskonałości w każdym koktajlu",
     aboutText1:
-      "Za mBar stoi Yan Maihur — barman z 5-letnim doświadczeniem zbudowanym przez setki godzin za barem i nieustanny rozwój. Szkolenia, testowanie nowych technik i doskonalenie detali to stały element naszej pracy. Podchodzimy do niej pedantycznie — każdy ruch, proporcja i element serwisu mają dla nas znaczenie.",
+      "Za mBar stoi Yan Maihur — barman z {years}-letnim doświadczeniem zbudowanym przez setki godzin za barem i nieustanny rozwój. Szkolenia, testowanie nowych technik i doskonalenie detali to stały element naszej pracy. Podchodzimy do niej pedantycznie — każdy ruch, proporcja i element serwisu mają dla nas znaczenie.",
     aboutText2:
       "Inspiruje nas japońska precyzja i świadoma sztuka miksologii. Wierzymy, że dobry drink to efekt rzemiosła, koncentracji i przemyślanych decyzji — nigdy przypadku.",
     founder: "Założyciel",
@@ -276,7 +275,6 @@ export const translations = {
     viewWork: "View Our Work",
     rating: "4.9/5 Rating",
     events: "500+ Events",
-    experience: "5 Years Experience",
     trusted: "Trusted by leading venues and event planners",
     licensed: "Fully Licensed",
     insured: "Insured",
@@ -320,7 +318,7 @@ export const translations = {
     aboutTitle: "About mBar",
     aboutSubtitle: "Passion for excellence in every cocktail",
     aboutText1:
-      "Behind mBar stands Yan Maihur — a bartender with 5 years of hands-on experience, built through hundreds of service hours and continuous investment in development. Training, experimenting with modern techniques, and refining every detail are a constant part of our work. We approach it with precision — every movement, proportion, and element of service matters.",
+      "Behind mBar stands Yan Maihur — a bartender with {years} years of hands-on experience, built through hundreds of service hours and continuous investment in development. Training, experimenting with modern techniques, and refining every detail are a constant part of our work. We approach it with precision — every movement, proportion, and element of service matters.",
     aboutText2:
       "We are inspired by Japanese precision and the conscious art of mixology. We believe a great cocktail is the result of craftsmanship, focus, and deliberate decisions — never coincidence.",
     founder: "Founder",

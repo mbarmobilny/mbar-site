@@ -1,5 +1,6 @@
 import { ImageWithFallback } from "./ui/ImageWithFallback";
 import { getTranslation } from "../utils/translations";
+import { formatThousands, getStats } from "../utils/stats";
 import { useLanguage } from "../context/LanguageContext";
 import { Container } from "./Container";
 import { SectionHeader } from "./SectionHeader";
@@ -10,13 +11,26 @@ import imgMixology from "../assets/about-mixology.webp";
 
 export function About() {
   const { language } = useLanguage();
+  const { years, hours, iceCubes, cocktails } = getStats();
   const stats = [
-    { label: getTranslation(language, "statYears"), value: "5+", prefix: null },
-    { label: getTranslation(language, "statHours"), value: "10k", prefix: ">" },
-    { label: getTranslation(language, "statIce"), value: "2k+", prefix: null },
+    {
+      label: getTranslation(language, "statYears"),
+      value: `${years}+`,
+      prefix: null,
+    },
+    {
+      label: getTranslation(language, "statHours"),
+      value: formatThousands(hours),
+      prefix: ">",
+    },
+    {
+      label: getTranslation(language, "statIce"),
+      value: `${formatThousands(iceCubes)}+`,
+      prefix: null,
+    },
     {
       label: getTranslation(language, "statCocktails"),
-      value: "5k",
+      value: formatThousands(cocktails),
       prefix: ">",
     },
   ];
@@ -70,7 +84,10 @@ export function About() {
             <div>
               <div className="max-w-lg">
                 <p className="text-primary/80 font-light leading-relaxed mb-8 text-xl">
-                  {getTranslation(language, "aboutText1")}
+                  {getTranslation(language, "aboutText1").replace(
+                    "{years}",
+                    String(years)
+                  )}
                 </p>
                 <p className="text-primary/60 leading-relaxed font-light border-l-2 border-secondary pl-6">
                   {getTranslation(language, "aboutText2")}
